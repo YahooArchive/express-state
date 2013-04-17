@@ -1,0 +1,38 @@
+{
+    "name"       : "express-state",
+    "description": "Expose an Express app's state via client-side JavaScript.",
+    "version"    : "0.0.1",
+
+    "keywords": [
+        "express", "state", "client", "expose", "data"
+    ],
+
+    "author": {
+        "name" : "Eric Ferraiuolo",
+        "email": "eferraiuolo@gmail.com",
+        "url"  : "http://ericf.me/"
+    },
+
+    "repository": {
+        "type": "git",
+        "url" : "git://git.corp.yahoo.com/modown/express-state.git"
+    },
+
+    "engines": {
+        "node": ">=0.8",
+        "npm" : ">=1.2.10"
+    },
+
+    "peerDependencies": {
+        "express": "3.x"
+    },
+
+    "devDependencies": {
+        "express"            : "3.x",
+        "express3-handlebars": "latest"
+    },
+
+    "main": "index",
+
+    "directories": {"lib": "./lib"}
+}
