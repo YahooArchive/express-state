@@ -13,13 +13,17 @@
         "url"  : "http://ericf.me/"
     },
 
+    "main": "index",
+
+    "directories": {"lib": "./lib"},
+
     "repository": {
         "type": "git",
         "url" : "git://git.corp.yahoo.com/modown/express-state.git"
     },
 
     "engines": {
-        "node": ">=0.8",
+        "node": ">=0.8.x",
         "npm" : ">=1.2.10"
     },
 
@@ -29,10 +33,12 @@
 
     "devDependencies": {
         "express"            : "3.x",
-        "express3-handlebars": "latest"
+        "express3-handlebars": "*",
+        "chai"               : "*",
+        "mocha"              : "*"
     },
 
-    "main": "index",
-
-    "directories": {"lib": "./lib"}
+    "scripts": {
+        "test": "./node_modules/.bin/_mocha test/*.js --reporter spec"
+    }
 }
