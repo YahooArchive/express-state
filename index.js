@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express'),
-    Exposed = require('./exposed'),
+    Exposed = require('./lib/exposed'),
 
     appProto = express.application,
     resProto = express.response;
