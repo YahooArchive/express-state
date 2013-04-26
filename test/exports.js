@@ -1,3 +1,4 @@
+/* global describe, it */
 'use strict';
 
 var state  = require('../'),
