@@ -6,16 +6,23 @@ var express = require('express'),
     appProto = express.application,
     resProto = express.response;
 
-exports.local = 'state';
+exports.local     = 'state';
+exports.namespace = null;
 
 // Modifies Express' `application` and `response` prototypes by adding the
 // `expose()` method.
 resProto.expose = appProto.expose = function (obj, namespace, local) {
-    local || (local = exports.local);
+    var app           = this.app || this,
+        appLocals     = this.app && this.app.locals,
+        locals        = this.locals,
+        rootNamespace = app.get('state namespace') || exports.namespace,
+        exposed;
 
-    var locals    = this.locals,
-        appLocals = this.app && this.app.locals,
-        exposed   = locals[local];
+    if (!local) {
+        local = app.get('state local') || exports.local;
+    }
+
+    exposed = locals[local];
 
     if(!(exposed instanceof Exposed)) {
         // Creates a new `Exposed` instance, and links its prototype to the
@@ -23,11 +30,23 @@ resProto.expose = appProto.expose = function (obj, namespace, local) {
         exposed = locals[local] = Exposed.create(appLocals && appLocals[local]);
     }
 
-    if (namespace) {
-        exposed.add(namespace, obj);
-    } else {
-        Object.keys(obj).forEach(function (key) {
+    // When no namespace is provided, expose each value of the specified `obj`
+    // at each of its keys, then return early.
+    if (!(namespace || rootNamespace)) {
+        return Object.keys(obj).forEach(function (key) {
             exposed.add(key, obj[key]);
         });
     }
+
+    if (namespace) {
+        if (/^window\..+/.test(namespace)) {
+            namespace = namespace.replace('window.', '');
+        } else if (rootNamespace && namespace.indexOf(rootNamespace) !== 0) {
+            namespace = rootNamespace + '.' + namespace;
+        }
+    } else {
+        namespace = rootNamespace;
+    }
+
+    exposed.add(namespace, obj);
 };
