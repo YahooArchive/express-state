@@ -14,4 +14,14 @@ describe('exports', function () {
             expect(state.local).to.be.a('string').equal('state');
         });
     });
+
+    describe('.namespace', function () {
+        it('should have a .namespace', function () {
+            expect(state).to.have.property('namespace');
+        });
+
+        it('should be null', function () {
+            expect(state.namespace).to.equal(null);
+        });
+    });
 });
