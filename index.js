@@ -16,7 +16,7 @@ resProto.expose = appProto.expose = function (obj, namespace, local) {
         appLocals     = this.app && this.app.locals,
         locals        = this.locals,
         rootNamespace = app.get('state namespace') || exports.namespace,
-        exposed;
+        exposed, type;
 
     if (!local) {
         local = app.get('state local') || exports.local;
@@ -33,9 +33,16 @@ resProto.expose = appProto.expose = function (obj, namespace, local) {
     // When no namespace is provided, expose each value of the specified `obj`
     // at each of its keys, then return early.
     if (!(namespace || rootNamespace)) {
-        return Object.keys(obj).forEach(function (key) {
-            exposed.add(key, obj[key]);
-        });
+        type = typeof obj;
+
+        // Only get the keys of enumerable objects.
+        if ((type === 'object' || type === 'function') && obj !== null) {
+            Object.keys(obj).forEach(function (key) {
+                exposed.add(key, obj[key]);
+            });
+        }
+
+        return;
     }
 
     if (namespace) {
