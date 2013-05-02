@@ -1,7 +1,8 @@
 Express State
 =============
 
-Expose an [Express][] app's state via client-side JavaScript.
+Share server-side state with the client-side of an [Express][] app via
+JavaScript.
 
 
 [Express]: https://github.com/visionmedia/express
