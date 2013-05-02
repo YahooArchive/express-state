@@ -40,13 +40,14 @@
     },
 
     "devDependencies": {
+        "chai"               : "*",
         "express"            : "3.x",
         "express3-handlebars": "*",
-        "chai"               : "*",
+        "istanbul"           : "*",
         "mocha"              : "*"
     },
 
     "scripts": {
-        "test": "./node_modules/.bin/_mocha test/*.js --reporter spec"
+        "test": "./node_modules/istanbul/lib/cli.js cover -- ./node_modules/.bin/_mocha test/*.js --reporter spec"
     }
 }
