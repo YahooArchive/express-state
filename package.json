@@ -2,9 +2,10 @@
     "name"       : "express-state",
     "description": "Expose an Express app's state via client-side JavaScript.",
     "version"    : "0.0.1",
+    "homepage"   : "https://github.com/yahoo/express-state",
 
     "keywords": [
-        "express", "state", "client", "expose", "data"
+        "express", "state", "client", "expose", "data", "config", "javascript"
     ],
 
     "author": {
@@ -15,11 +16,18 @@
 
     "main": "index",
 
-    "directories": {"lib": "./lib"},
+    "directories": {
+        "lib"    : "./lib",
+        "example": "./examples"
+    },
 
     "repository": {
         "type": "git",
-        "url" : "git://git.corp.yahoo.com/modown/express-state.git"
+        "url" : "https://github.com/yahoo/express-state.git"
+    },
+
+    "bugs": {
+        "url": "https://github.com/yahoo/express-state/issues"
     },
 
     "engines": {
