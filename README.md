@@ -15,6 +15,12 @@ Goals & Design
 Installation
 ------------
 
+Install using npm:
+
+```shell
+$ npm install express-state
+```
+
 
 Usage
 -----
