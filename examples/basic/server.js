@@ -1,6 +1,6 @@
 var express = require('express'),
     exphbs  = require('express3-handlebars'),
-    state   = require('../../'),
+    state   = require('../../'), // "express-state"
 
     app = express();
 
