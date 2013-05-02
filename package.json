@@ -1,11 +1,11 @@
 {
     "name"       : "express-state",
-    "description": "Expose an Express app's state via client-side JavaScript.",
+    "description": "Share server-side state with the client-side of an Express app via JavaScript.",
     "version"    : "0.0.1",
     "homepage"   : "https://github.com/yahoo/express-state",
 
     "keywords": [
-        "express", "state", "client", "expose", "data", "config", "javascript"
+        "express", "state", "client", "expose", "data", "config", "javascript", "model", "json"
     ],
 
     "author": {
