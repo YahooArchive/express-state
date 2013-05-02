@@ -60,6 +60,40 @@ describe('Exposed', function () {
         });
     });
 
+    describe('.isExposed([obj])', function () {
+        it('should respond to .isExposed()', function () {
+            expect(Exposed).itself.to.respondTo('isExposed');
+        });
+
+        it('should return `true` for Exposed instances', function () {
+            var exposed = Exposed.create();
+            expect(exposed).to.be.instanceOf(Exposed);
+            expect(Exposed.isExposed(exposed)).to.equal(true);
+        });
+
+        it('should return `true` for Exposed-like objects', function () {
+            var exposed = Object.create(null, {
+                '__namespaces__': {value: []}
+            });
+
+            expect(Exposed.isExposed(exposed)).to.equal(true);
+            expect(Exposed.isExposed({'__namespaces__': []})).to.equal(true);
+        });
+
+        it('should return `false` for non-Exposed-like objects', function () {
+            expect(Exposed.isExposed()).to.equal(false);
+            expect(Exposed.isExposed(undefined)).to.equal(false);
+            expect(Exposed.isExposed(null)).to.equal(false);
+            expect(Exposed.isExposed(false)).to.equal(false);
+            expect(Exposed.isExposed(0)).to.equal(false);
+            expect(Exposed.isExposed('')).to.equal(false);
+            expect(Exposed.isExposed(function () {})).to.equal(false);
+            expect(Exposed.isExposed({})).to.equal(false);
+            expect(Exposed.isExposed([])).to.equal(false);
+            expect(Exposed.isExposed({'__namespaces__': true})).to.equal(false);
+        });
+    });
+
     describe('#add(namespace, value)', function () {
         var exposed;
 
