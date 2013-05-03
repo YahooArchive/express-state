@@ -4,8 +4,11 @@ Express State
 Share server-side state with the client-side of an [Express][] app via
 JavaScript.
 
+[![Build Status](https://travis-ci.org/yahoo/express-state.png?branch=master)][Build Status]
+
 
 [Express]: https://github.com/visionmedia/express
+[Build Status]: https://travis-ci.org/yahoo/express-state
 
 
 Goals & Design
