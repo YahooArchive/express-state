@@ -44,7 +44,8 @@
         "express"            : "3.x",
         "express3-handlebars": "*",
         "istanbul"           : "*",
-        "mocha"              : "*"
+        "mocha"              : "*",
+        "xunit-file"         : "*"
     },
 
     "scripts": {
