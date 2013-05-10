@@ -23,7 +23,7 @@
 
     "repository": {
         "type": "git",
-        "url" : "https://github.com/yahoo/express-state.git"
+        "url" : "git://github.com/yahoo/express-state.git"
     },
 
     "bugs": {
