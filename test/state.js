@@ -4,7 +4,6 @@
 var expressUtils = require('express/lib/utils'),
     expect       = require('chai').expect,
     express      = require('express'),
-    mockery      = require('mockery'),
 
     state = require('../');
 
@@ -223,37 +222,6 @@ describe('state', function () {
             res.expose('FOO', 'foo');
             expect(res.locals.state).to.have.ownProperty('foo');
             expect(res.locals.state.foo).to.equal('FOO');
-        });
-    });
-
-    describe('multiple copies', function () {
-        beforeEach(function () {
-            mockery.enable({
-                useCleanCache     : true,
-                warnOnReplace     : false,
-                warnOnUnregistered: false
-            });
-
-            mockery.registerMock('express', {
-                application: {},
-                response   : {}
-            });
-        });
-
-        afterEach(function () {
-            mockery.disable();
-        });
-
-        it('should not override `expose()` if it exists', function () {
-            var expose = function () {},
-                express, state;
-
-            express = require('express')
-            express.application.expose = express.response.expose = expose;
-            state = require('../');
-
-            expect(express.application.expose).to.equal(expose);
-            expect(express.response.expose).to.equal(expose);
         });
     });
 });
