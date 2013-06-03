@@ -45,6 +45,7 @@
         "express3-handlebars": "*",
         "istanbul"           : "*",
         "mocha"              : "*",
+        "mockery"            : "*",
         "xunit-file"         : "*"
     },
 
