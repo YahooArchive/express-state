@@ -9,6 +9,14 @@ var express = require('express'),
 exports.local     = 'state';
 exports.namespace = null;
 
+// Protect against multiple copies of this module augmenting the Express
+// `application` and `response` prototypes.
+if (typeof appProto.expose === 'function' &&
+    typeof resProto.expose === 'function') {
+
+    return;
+}
+
 // Modifies Express' `application` and `response` prototypes by adding the
 // `expose()` method.
 resProto.expose = appProto.expose = function (obj, namespace, local) {

@@ -1,24 +1,17 @@
 /* global describe, it, beforeEach, afterEach */
 'use strict';
 
-var state        = require('../'),
-    express      = require('express'),
-    expressUtils = require('express/lib/utils'),
+var expressUtils = require('express/lib/utils'),
     expect       = require('chai').expect,
+    express      = require('express'),
 
-    origLocal     = state.local,
-    origNamespace = state.namespace;
+    state = require('../');
 
 describe('state', function () {
     var app;
 
     beforeEach(function () {
         app = express();
-    });
-
-    afterEach(function () {
-        state.local     = origLocal;
-        state.namespace = origNamespace;
     });
 
     describe('expose()', function () {
@@ -49,6 +42,16 @@ describe('state', function () {
         });
 
         describe('global .local', function () {
+            var origLocal;
+
+            beforeEach(function () {
+                origLocal = state.local;
+            });
+
+            afterEach(function () {
+                state.local = origLocal;
+            });
+
             it('should create the exposed object at the specified `local`', function () {
                 state.local = 'javascript';
                 expose();
@@ -63,6 +66,16 @@ describe('state', function () {
         });
 
         describe('global .namespace', function () {
+            var origNamespace;
+
+            beforeEach(function () {
+                origNamespace = state.namespace;
+            });
+
+            afterEach(function () {
+                state.namespace = origNamespace;
+            });
+
             it('should be used when no namespace is provided', function () {
                 state.namespace = 'App';
                 expose('foo');
@@ -98,6 +111,16 @@ describe('state', function () {
         });
 
         describe('setting: "state local"', function () {
+            var origLocal;
+
+            beforeEach(function () {
+                origLocal = state.local;
+            });
+
+            afterEach(function () {
+                state.local = origLocal;
+            });
+
             it('should use app setting', function () {
                 app.set('state local', 'javascript');
                 app.expose();
@@ -119,10 +142,27 @@ describe('state', function () {
         });
 
         describe('setting: "state namespace"', function () {
+            var origNamespace;
+
+            beforeEach(function () {
+                origNamespace = state.namespace;
+            });
+
+            afterEach(function () {
+                state.namespace = origNamespace;
+            });
+
             it('should use app setting', function () {
                 app.set('state namespace', 'App');
                 app.expose('foo');
                 expect(app.locals.state.App).to.equal('foo');
+            });
+
+            it('should be preferred over the global .namespace', function () {
+                state.namespace = 'App';
+                app.set('state namespace', 'Data');
+                app.expose('foo');
+                expect(app.locals.state.Data).to.equal('foo');
             });
 
             it('should be used as a prefix to the `namespace` provided', function () {
