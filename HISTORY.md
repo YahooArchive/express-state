@@ -1,11 +1,11 @@
 Express State Change History
 ============================
 
-NEXT
-----
+0.0.3 (2013-06-08)
+------------------
 
-* Prevented multiple copies of express-state from overwriting `expose()` when it
-  already has been plugged into a copy of express.
+* Prevented multiple copies of `express-state` from overwriting `expose()` when
+  it already has been plugged into a copy of `express`.
 
 * Added Screwdriver CI integration.
 
