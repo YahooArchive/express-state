@@ -1,25 +1,32 @@
 'use strict';
 
 var express = require('express'),
-    Exposed = require('./lib/exposed'),
-
-    appProto = express.application,
-    resProto = express.response;
+    Exposed = require('./lib/exposed');
 
 exports.local     = 'state';
 exports.namespace = null;
+exports.extend    = extend;
 
-// Protect against multiple copies of this module augmenting the Express
-// `application` and `response` prototypes.
-if (typeof appProto.expose === 'function' &&
-    typeof resProto.expose === 'function') {
+extend(express);
 
-    return;
+function extend(express) {
+    var appProto = express.application,
+        resProto = express.response;
+
+    // Protect against multiple copies of this module augmenting the Express
+    // `application` and `response` prototypes.
+    if (typeof appProto.expose === 'function' &&
+        typeof resProto.expose === 'function') {
+
+        return;
+    }
+
+    // Modifies Express' `application` and `response` prototypes by adding the
+    // `expose()` method.
+    resProto.expose = appProto.expose = expose;
 }
 
-// Modifies Express' `application` and `response` prototypes by adding the
-// `expose()` method.
-resProto.expose = appProto.expose = function (obj, namespace, local) {
+function expose(obj, namespace, local) {
     var app           = this.app || this,
         appLocals     = this.app && this.app.locals,
         locals        = this.locals,
@@ -64,4 +71,4 @@ resProto.expose = appProto.expose = function (obj, namespace, local) {
     }
 
     exposed.add(namespace, obj);
-};
+}
