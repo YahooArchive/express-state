@@ -5,7 +5,9 @@ var express = require('express'),
 
 exports.local     = 'state';
 exports.namespace = null;
-exports.extend    = extend;
+
+exports.augment = augment;
+exports.extend  = extend;
 
 extend(express);
 
@@ -13,8 +15,8 @@ function extend(express) {
     var appProto = express.application,
         resProto = express.response;
 
-    // Protect against multiple copies of this module augmenting the Express
-    // `application` and `response` prototypes.
+    // Protect against multiple express-state module instances augmenting the
+    // Express `application` and `response` prototypes.
     if (typeof appProto.expose === 'function' &&
         typeof resProto.expose === 'function') {
 
@@ -24,6 +26,22 @@ function extend(express) {
     // Modifies Express' `application` and `response` prototypes by adding the
     // `expose()` method.
     resProto.expose = appProto.expose = expose;
+}
+
+function augment(app) {
+    var resProto = app.response;
+
+    // Protect against multiple express-state module instances augmenting the
+    // Express `app` and its `response` prototypes.
+    if (typeof app.expose === 'function' &&
+        typeof resProto.expose === 'function') {
+
+        return;
+    }
+
+    // Modifies the Express `app` and its `response` prototype by adding the
+    // `expose()` method.
+    resProto.expose = app.expose = expose;
 }
 
 function expose(obj, namespace, local) {

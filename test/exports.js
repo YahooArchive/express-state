@@ -6,7 +6,7 @@ var state  = require('../'),
 
 describe('exports', function () {
     describe('.local', function () {
-        it('should have a .local', function () {
+        it('should have a .local property', function () {
             expect(state).to.have.property('local');
         });
 
@@ -16,12 +16,32 @@ describe('exports', function () {
     });
 
     describe('.namespace', function () {
-        it('should have a .namespace', function () {
+        it('should have a .namespace property', function () {
             expect(state).to.have.property('namespace');
         });
 
         it('should be null', function () {
             expect(state.namespace).to.equal(null);
+        });
+    });
+
+    describe('.augment', function () {
+        it('should have a .augment property', function () {
+            expect(state).to.have.property('augment');
+        });
+
+        it('should respond to .augment()', function () {
+            expect(state).itself.to.respondTo('augment');
+        });
+    });
+
+    describe('.extend', function () {
+        it('should have a .extend property', function () {
+            expect(state).to.have.property('extend');
+        });
+
+        it('should respond to .extend()', function () {
+            expect(state).itself.to.respondTo('extend');
         });
     });
 });
