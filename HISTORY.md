@@ -9,8 +9,8 @@ Express State Change History
   not already exist.
 
 * Added `augment()` function which takes an Express app instance and adds the
-  `expose()` method to it application and its response prototype, if it does not
-  already exist.
+  `expose()` method to it and its response prototype, if it does not already
+  exist.
 
 
 0.0.3 (2013-06-08)
