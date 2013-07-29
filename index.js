@@ -45,6 +45,8 @@ function augment(app) {
 }
 
 function expose(obj, namespace, local) {
+    /* jshint validthis:true */
+
     var app           = this.app || this,
         appLocals     = this.app && this.app.locals,
         locals        = this.locals,
