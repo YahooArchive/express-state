@@ -1,25 +1,52 @@
 'use strict';
 
 var express = require('express'),
-    Exposed = require('./lib/exposed'),
-
-    appProto = express.application,
-    resProto = express.response;
+    Exposed = require('./lib/exposed');
 
 exports.local     = 'state';
 exports.namespace = null;
 
-// Protect against multiple copies of this module augmenting the Express
-// `application` and `response` prototypes.
-if (typeof appProto.expose === 'function' &&
-    typeof resProto.expose === 'function') {
+exports.augment = augment;
+exports.extend  = extend;
 
-    return;
+extend(express);
+
+function extend(express) {
+    var appProto = express.application,
+        resProto = express.response;
+
+    // Protect against multiple express-state module instances augmenting the
+    // Express `application` and `response` prototypes.
+    if (typeof appProto.expose === 'function' &&
+        typeof resProto.expose === 'function') {
+
+        return;
+    }
+
+    // Modifies Express' `application` and `response` prototypes by adding the
+    // `expose()` method.
+    resProto.expose = appProto.expose = expose;
 }
 
-// Modifies Express' `application` and `response` prototypes by adding the
-// `expose()` method.
-resProto.expose = appProto.expose = function (obj, namespace, local) {
+function augment(app) {
+    var resProto = app.response;
+
+    // Protect against multiple express-state module instances augmenting the
+    // Express `app` and its `response` prototypes.
+    if (typeof app.expose === 'function' &&
+        typeof resProto.expose === 'function') {
+
+        return;
+    }
+
+    // Modifies the Express `app` and its `response` prototype by adding the
+    // `expose()` method.
+    resProto.expose = app.expose = expose;
+}
+
+function expose(obj, namespace, local) {
+    /* jshint validthis:true */
+
     var app           = this.app || this,
         appLocals     = this.app && this.app.locals,
         locals        = this.locals,
@@ -64,4 +91,4 @@ resProto.expose = appProto.expose = function (obj, namespace, local) {
     }
 
     exposed.add(namespace, obj);
-};
+}
