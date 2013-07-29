@@ -14,7 +14,7 @@ describe('state', function () {
         app = express();
     });
 
-    describe('expose()', function () {
+    describe('expose( obj, [namespace], [local] )', function () {
         var expose, locals;
 
         beforeEach(function () {

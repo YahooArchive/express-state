@@ -9,7 +9,7 @@ describe('Exposed', function () {
         expect(Exposed).to.be.a('function');
     });
 
-    describe('.create([exposed])', function () {
+    describe('.create( [exposed] )', function () {
         it('should respond to .create()', function () {
             expect(Exposed).itself.to.respondTo('create');
         });
@@ -60,7 +60,7 @@ describe('Exposed', function () {
         });
     });
 
-    describe('.isExposed([obj])', function () {
+    describe('.isExposed( [obj] )', function () {
         it('should respond to .isExposed()', function () {
             expect(Exposed).itself.to.respondTo('isExposed');
         });
@@ -94,7 +94,7 @@ describe('Exposed', function () {
         });
     });
 
-    describe('#add(namespace, value)', function () {
+    describe('#add( namespace, value )', function () {
         var exposed;
 
         beforeEach(function () {
