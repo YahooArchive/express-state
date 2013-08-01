@@ -33,5 +33,14 @@ describe('exports', function () {
         it('should respond to .extend()', function () {
             expect(state).itself.to.respondTo('extend');
         });
+
+        it('should always return the Express app being extended', function () {
+            var app = {response: {}};
+
+            // Extended twice to make sure an already extended app is still
+            // returned.
+            expect(state.extend(app)).to.equal(app);
+            expect(state.extend(app)).to.equal(app);
+        });
     });
 });

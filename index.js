@@ -7,7 +7,7 @@ exports.namespace = null;
 exports.extend    = extendApp;
 
 function extendApp(app) {
-    if (app['@state']) { return; }
+    if (app['@state']) { return app; }
 
     // Brand.
     Object.defineProperty(app, '@state', {value: true});
