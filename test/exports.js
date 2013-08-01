@@ -25,16 +25,6 @@ describe('exports', function () {
         });
     });
 
-    describe('.augment', function () {
-        it('should have a .augment property', function () {
-            expect(state).to.have.property('augment');
-        });
-
-        it('should respond to .augment()', function () {
-            expect(state).itself.to.respondTo('augment');
-        });
-    });
-
     describe('.extend', function () {
         it('should have a .extend property', function () {
             expect(state).to.have.property('extend');

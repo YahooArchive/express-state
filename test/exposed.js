@@ -73,11 +73,11 @@ describe('Exposed', function () {
 
         it('should return `true` for Exposed-like objects', function () {
             var exposed = Object.create(null, {
-                '__namespaces__': {value: []}
+                '@exposed': {value: true}
             });
 
             expect(Exposed.isExposed(exposed)).to.equal(true);
-            expect(Exposed.isExposed({'__namespaces__': []})).to.equal(true);
+            expect(Exposed.isExposed({'@exposed': true})).to.equal(true);
         });
 
         it('should return `false` for non-Exposed-like objects', function () {
@@ -90,7 +90,7 @@ describe('Exposed', function () {
             expect(Exposed.isExposed(function () {})).to.equal(false);
             expect(Exposed.isExposed({})).to.equal(false);
             expect(Exposed.isExposed([])).to.equal(false);
-            expect(Exposed.isExposed({'__namespaces__': true})).to.equal(false);
+            expect(Exposed.isExposed({'@exposed': false})).to.equal(false);
         });
     });
 
