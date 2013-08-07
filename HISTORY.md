@@ -1,7 +1,7 @@
 Express State Change History
 ============================
 
-0.4.0 (2013-07-29)
+0.0.4 (2013-07-29)
 ------------------
 
 * Added `extend()` function which takes an `express` module instance and adds
