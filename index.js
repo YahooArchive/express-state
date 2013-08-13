@@ -1,47 +1,23 @@
 'use strict';
 
-var express = require('express'),
-    Exposed = require('./lib/exposed');
+var Exposed = require('./lib/exposed');
 
 exports.local     = 'state';
 exports.namespace = null;
+exports.extend    = extendApp;
 
-exports.augment = augment;
-exports.extend  = extend;
+function extendApp(app) {
+    if (app['@state']) { return app; }
 
-extend(express);
-
-function extend(express) {
-    var appProto = express.application,
-        resProto = express.response;
-
-    // Protect against multiple express-state module instances augmenting the
-    // Express `application` and `response` prototypes.
-    if (typeof appProto.expose === 'function' &&
-        typeof resProto.expose === 'function') {
-
-        return;
-    }
-
-    // Modifies Express' `application` and `response` prototypes by adding the
-    // `expose()` method.
-    resProto.expose = appProto.expose = expose;
-}
-
-function augment(app) {
-    var resProto = app.response;
-
-    // Protect against multiple express-state module instances augmenting the
-    // Express `app` and its `response` prototypes.
-    if (typeof app.expose === 'function' &&
-        typeof resProto.expose === 'function') {
-
-        return;
-    }
+    // Brand.
+    Object.defineProperty(app, '@state', {value: true});
 
     // Modifies the Express `app` and its `response` prototype by adding the
     // `expose()` method.
-    resProto.expose = app.expose = expose;
+    app.expose          = expose;
+    app.response.expose = expose;
+
+    return app;
 }
 
 function expose(obj, namespace, local) {

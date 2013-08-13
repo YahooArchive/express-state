@@ -25,16 +25,6 @@ describe('exports', function () {
         });
     });
 
-    describe('.augment', function () {
-        it('should have a .augment property', function () {
-            expect(state).to.have.property('augment');
-        });
-
-        it('should respond to .augment()', function () {
-            expect(state).itself.to.respondTo('augment');
-        });
-    });
-
     describe('.extend', function () {
         it('should have a .extend property', function () {
             expect(state).to.have.property('extend');
@@ -42,6 +32,15 @@ describe('exports', function () {
 
         it('should respond to .extend()', function () {
             expect(state).itself.to.respondTo('extend');
+        });
+
+        it('should always return the Express app being extended', function () {
+            var app = {response: {}};
+
+            // Extended twice to make sure an already extended app is still
+            // returned.
+            expect(state.extend(app)).to.equal(app);
+            expect(state.extend(app)).to.equal(app);
         });
     });
 });

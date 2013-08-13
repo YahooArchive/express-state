@@ -4,6 +4,10 @@ var express = require('express'),
 
     app = express();
 
+// Extend Express app with Express State's functionality. This adds the
+// `app.expose()` and `res.expose()` methods.
+state.extend(app);
+
 app.engine('hbs', exphbs());
 app.set('view engine', 'hbs');
 
@@ -30,6 +34,6 @@ app.get('/foo', function (req, res, next) {
     res.render('index');
 });
 
-app.expose('MY APP', 'title', 'app');
+app.expose('MY APP', 'title');
 
 app.listen(3000);

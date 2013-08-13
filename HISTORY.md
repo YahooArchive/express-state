@@ -1,6 +1,24 @@
 Express State Change History
 ============================
 
+NEXT
+----
+
+* [!] Changed how this package extends `express`. There is now only one way, and
+  that's to explicitly pass an Express app instance to the `extend()` method:
+
+      var express  = require('express'),
+          expstate = require('express-state'),
+
+          app = express();
+
+      // Extend the Express app with Express State's functionality.
+      expstate.extend(app);
+
+  This new `extend()` implementation uses the
+  [object branding technique](https://gist.github.com/ericf/6133744).
+
+
 0.0.4 (2013-07-29)
 ------------------
 
