@@ -97,6 +97,13 @@ describe('serialize', function () {
             expect(fn).to.be.a('function');
             expect(fn()).to.equal(true);
         });
+
+        it('should throw a TypeError when serializing native built-ins', function () {
+            var err;
+            expect(Number.toString()).to.equal('function Number() { [native code] }');
+            try { serialize(Number); } catch (e) { err = e; }
+            expect(err).to.be.an.instanceOf(TypeError);
+        });
     });
 
     describe('regexps', function () {
