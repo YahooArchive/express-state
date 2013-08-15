@@ -35,7 +35,7 @@ function expose(obj, namespace, local) {
 
     exposed = locals[local];
 
-    if(!Exposed.isExposed(exposed)) {
+    if (!Exposed.isExposed(exposed)) {
         // Creates a new `Exposed` instance, and links its prototype to the
         // corresponding app exposed object, if one exists.
         exposed = locals[local] = Exposed.create(appLocals && appLocals[local]);
