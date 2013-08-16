@@ -1,8 +1,8 @@
 Express State Change History
 ============================
 
-NEXT
-----
+1.0.0 (2013-08-15)
+------------------
 
 * __[!]__ Changed how this package extends Express. There's now _only_ one way —
   to explicitly pass an Express app instance to the `extend()` method:
