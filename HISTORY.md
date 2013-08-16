@@ -24,7 +24,10 @@ NEXT
   functions. This matches the behavior of `JSON.stringify()` with circular
   references. ([#7][])
 
+* Added documentation in README.md. ([#2][])
 
+
+[#2]: https://github.com/yahoo/express-state/issues/2
 [#6]: https://github.com/yahoo/express-state/issues/6
 [#7]: https://github.com/yahoo/express-state/issues/7
 
