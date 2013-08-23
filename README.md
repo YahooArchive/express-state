@@ -17,10 +17,10 @@ Goals, Overview & Features
 
 Express State is designed to make it easy to share configuration and state data
 from the server to the client. It can be used to share any data that needs to be
-available to the client-side JavaScript code of the an app; e.g., the current
+available to the client-side JavaScript code of the an app: e.g., the current
 user, a CSRF token, model data, routes, etc.
 
-Progressively enhanced web apps can be built by rendering an app's initial state
+Progressively enhanced Web apps can be built by rendering an app's initial state
 on the server and using Express State as the conduit through which the server
 passes data and control over to the client-side JavaScript code.
 
@@ -31,27 +31,27 @@ methods: `app.expose()` and `res.expose()`, both of which make the data
 available on a special `state` "locals" object for views/templates to serialize
 and embed into HTML pages.
 
-When Views/templates embed this exposed data into an HTML page it is serialized
+When views/templates embed this exposed data into an HTML page, it is serialized
 as literal JavaScript. The JavaScript serialization format is limited to
-expressions which initialize namespaces and the exposed data assigned to those
-namespaces, which is a superset of JSON that includes regexps and functions.
+expressions that initialize namespaces and the exposed data assigned to those
+namespaces, which is a superset of JSON that includes regular expressions and functions.
 
 ### Features
 
-Express State was written because of shortcomings with [express-expose][]. The
-following is a list features which highlight differences when compared with
-express-expose:
+Express State was written because of the shortcomings of [express-expose][]. The
+following is a list of features highlighting differences when compared with
+`express-expose`:
 
-- **Uses an efficient and powerful serialization format:**
-  Literal JavaScript is used to namespace exposed data which is a superset of
-  JSON and include regexps and functions. This avoids the cost of allocating and
-  parsing large JSON strings on the client, and enables things like sharing
-  routes defined as regexps with a client-side URL router.
+- **An efficient and powerful serialization format:**
+  Literal JavaScript is used to namespace exposed data that is a superset of
+  JSON and include regular expressions and functions. This avoids the cost of allocating and
+  parsing large JSON strings on the client and enables things like sharing
+  routes defined as regular expressions with a client-side URL router.
 
 - **Smart namespacing:**
   A root namespace can be set via an app's `state namespace` setting and it will
   be prepended to namespaces passed to `expose()` unless they already contain it
-  or they start with `"window."`. The "global" on to which the namespaces are
+  or they start with `"window."`. The `"global"` on to which the namespaces are
   created can also be controlled.
 
 - **Precise data value overrides:**
@@ -62,7 +62,7 @@ express-expose:
 - **Lazy serialization:**
   Exposed data objects are stored by reference, making them "live" and allowing
   their values to be updated even after the object has been exposed. Only the
-  namespaces and data which are still reachable after the series of `expose()`
+  namespaces and data that are still reachable after the series of `expose()`
   calls will be serialized. Serialization can happen at anytime, on demand, by
   calling the `toString()` method on `state` "locals" objects.
 
@@ -105,10 +105,10 @@ expstate.extend(app);
 ```
 
 Once extended, the app will have the `app.expose()` method, and response objects
-will the `res.expose()` method.
+will have the `res.expose()` method.
 
 **Note:** It's perfectly fine for the same Express app to be extended more than
-once, after the first time the app is extended the subsequent `extend()` calls
+once; after the first time the app is extended, the subsequent `extend()` calls
 will be noops.
 
 ### Exposing Data
@@ -116,14 +116,14 @@ will be noops.
 Data can be exposed at two different scopes: the app's scope, and a
 request/response's scope via `app.expose()` and `res.expose()` respectively.
 
-Express State uses Express' built-in "locals" system. When data is exposed at
-the app's scope a special `app.locals.state` object is created and used as the
+Express State uses Express's built-in "locals" system. When data is exposed at
+the app's scope, a special `app.locals.state` object is created and used as the
 backing store for all `app.expose()` calls. Express also merges `app.locals`
 with `res.locals` to create the context object in which views/templates are
 rendered. This means that, by default, data exposed at the app's scope will also
 be present when rendering views/templates for _all_ requests.
 
-Express State sets up a similar relationship using prototypal inheritence where
+Express State sets up a similar relationship using prototypal inheritance where
 `res.locals.state` inherits from `app.locals.state`. This means data exposed at
 the request scope will also contain exposed data from the app's scope. If values
 for the same namespace are exposed at both scopes, the request/response scope
@@ -131,7 +131,7 @@ takes precedence and shadows the value at the app's scope.
 
 #### Exposing App Scoped Data
 
-When data which needs to be exposed to the client-side JavaScript code is _not_
+When data that needs to be exposed to the client-side JavaScript code is _not_
 request-specific and should be available to all requests, it should be exposed
 at the app's scope using __`app.expose()`__.
 
@@ -149,13 +149,13 @@ The client-side JavaScript code can now lookup the Flickr API key at
 
 #### Exposing Request Scoped Data
 
-When data which needs to be exposed to the client-side JavaScript _is_
+When data that needs to be exposed to the client-side JavaScript _is_
 request-specific, it should be exposed at the request/response's scope using
 __`res.expose()`__.
 
 The following example shows how to create a middleware function to expose the
-current person's Cross Site Request Forgery (CSRF) token — this is a best
-practice where the CSRF is used to validate HTTP requests which mutate state:
+current person's Cross Site Request Forgery (CSRF) token—this is a best
+practice where the CSRF is used to validate HTTP requests that mutate state:
 
 ```javascript
 // Add Express' packaged `cookieParser()`, `session()`, and `csrf()` middleware.
@@ -178,7 +178,7 @@ the value at `MY_APP.CSRF_TOKEN` to all XHRs it makes to the server.
 
 A common practice is to set a root namespace for an app so all of its exposed
 data is contained under one global variable in the client-side JavaScript code.
-A root namespace can be setup for an app using the `state namesapce` setting:
+A root namespace can be setup for an app using the `state namespace` setting:
 
 ```javascript
 app.set('state namespace', 'MY_APP');
@@ -199,7 +199,7 @@ app.expose(123, 'window.MY_APP.foo');
 ```
 
 Setting a root namespace helps keep code DRY and configurable at the app level
-while having the `"window."` escape hatch for data which needs to be exposed at
+while having the `"window."` escape hatch for data that needs to be exposed at
 a specific namespace on the client.
 
 ### Overriding Exposed Values
@@ -207,9 +207,9 @@ a specific namespace on the client.
 Objects that are exposed through either `expose()` method are stored by
 reference, and serialization is done lazily. This means the objects are still
 "live" after they've been exposed. An object can be exposed early during the
-lifecycle of a request, and updated up until the point the response is sent.
+lifecycle of a request and updated up until the response is sent.
 
-The following is a contrived example, but shows how values can overridden at
+The following is a contrived example, but shows how values can be overridden at
 any time and at any scope:
 
 ```javascript
@@ -241,21 +241,21 @@ not waste CPU and bytes serializing them.
 
 ### Serialization
 
-Express State serializes exposed data to literal, executable JavaScript. The
-JavaScript produced during serialization is limited to expressions which
+Express State serializes exposed data to literal executable JavaScript. The
+JavaScript produced during serialization is limited to expressions that
 initialize namespaces and the exposed data assigned to those namespaces, which
-is a superset of JSON that includes regexps and functions.
+is a superset of JSON that includes regular expressions and functions.
 
-JavaScript as the serialization format is more powerful and efficient than JSON.
-It avoids the cost of allocating and parsing large JSON strings on the client,
-and enables things like sharing routes defined as regexps with a client-side URL
-router.
+JavaScript, as the serialization format, is more powerful and efficient than JSON.
+It avoids the cost of allocating and parsing large JSON strings on the client
+and enables things like sharing routes defined as regular expressions with a 
+client-side URL router.
 
 The special `app.locals.state` and `res.locals.state` objects contain a custom
-`toString()` method implementation which serializes them to JavaScript that is
+`toString()` method implementation, which serializes the objects to JavaScript that is
 human readable and can be embedded inside a `<script>` element in an HTML page.
 
-The following example shows a series of `expose()` calls, and the resulting
+The following example shows a series of `expose()` calls and the resulting
 output from serialization:
 
 ```javascript
@@ -286,16 +286,16 @@ g.a.very.big.ns = function () { return 'bla'; };
 
 **Note:** A `TypeError` will be thrown if a native built-in function is being
 serialized, like the `Number` constructor. Native built-ins should be called in
-wrapper functions, and the wrapper function can be serialized.
+wrapper functions, which can be serialized.
 
 ### Embedding Data in HTML with Templates
 
 To pass along the exposed configuration and state data to the client-side
-JavaScript code it needs to be embedded in the app's HTML pages inside a
-`<script>` element.
+JavaScript code, it needs to be embedded in a
+`<script>` element of the app's HTML pages.
 
 In Express, `res.render()` is used to render a view/template and send the
-response to the client. When rendering, Express sets up a context which is an
+response to the client. When rendering, Express sets up a context, which is an
 object resulting from merging `app.locals` with `res.locals`. This means the
 special __`state`__ object is available to the views/templates.
 
@@ -321,7 +321,7 @@ serialized `state` object:
 ```
 
 **Note:** In this example triple-mustaches (`{{{ }}}`) are used so that
-Handlebars does _not_ HTML-escape the value. Handlebars will automatically call
+Handlebars does _not_ HTML-escape the value. Handlebars will automatically call the
 `toString()` method on the special `state` object, which renders the JavaScript.
 
 
@@ -363,7 +363,7 @@ By default, Express State will create these objects:
 
 A string root namespace which should be prepended on the namespaces provided to
 `app.expose()` and `res.expose()` method calls. By default, no root namespace is
-used and namespaces are created directly on the global (`window`) object in the
+used, and namespaces are created directly on the global (`window`) object in the
 browser.
 
 See [Setting a Root Namespace][] for more details.
@@ -371,7 +371,7 @@ See [Setting a Root Namespace][] for more details.
 ### App Settings
 
 The following settings use the [Express Settings][] feature and only apply to
-the app which they are `set()`. These app settings take precedence over Express
+the app which they are `set()`. These app settings take precedence over the Express
 State's global configuration settings above.
 
 #### `state local`
@@ -391,9 +391,9 @@ app.set('state local', 'exposed');
 
 #### `state namespace`
 
-A string root namespace which should be prepended on the namespaces provided to
+A string root namespace that should be prepended on the namespaces provided to
 `app.expose()` and `res.expose()` method calls. By default, no root namespace is
-used and namespaces are created directly on the global (`window`) object in the
+used, and namespaces are created directly on the global (`window`) object in the
 browser.
 
 The following example sets the root namespace to `"MY_APP"`:
@@ -408,12 +408,12 @@ See [Setting a Root Namespace][] for more details.
 
 #### `extend (app)`
 
-A function exported from the Express State module which extends the
+A function exported from the Express State module that extends the
 functionality of the specified Express `app` by adding the two `expose()`
 methods: `app.expose()` and `res.expose()`.
 
-It's perfectly fine for the same Express app to be extended more than once,
-after the first time the app is extended the subsequent `extend()` calls will
+It's perfectly fine for the same Express app to be extended more than once;
+after the first time the app is extended, the subsequent `extend()` calls will
 be noops.
 
 **Parameters:**
@@ -428,7 +428,7 @@ See [Extending an Express App][] for more details.
 
 #### `res.expose (obj, [namespace], [local])`
 
-The two `expose()` methods behave the same, the only difference is at what scope
+The two `expose()` methods behave the same, the only difference being what scope
 the data is exposed, either the app's or at the request's scope.
 
 These two methods are used to expose configuration and state to client-side
@@ -437,7 +437,7 @@ views/templates to serialize and embed into HTML pages.
 
 **Parameters:**
 
-* `obj`: Any serializable JavaScript object which to expose to the client-side.
+* `obj`: Any serializable JavaScript object to be exposed to the client-side.
 
 * `[namespace]`: Optional string namespace where the `obj` should be exposed.
   This namespace will be prefixed with any configured root namespace unless it
@@ -449,7 +449,7 @@ views/templates to serialize and embed into HTML pages.
 
 **Note:** A `TypeError` will be thrown if a native built-in function is being
 serialized, like the `Number` constructor. Native built-ins should be called in
-wrapper functions, and the wrapper function can be serialized.
+wrapper functions, which can be serialized.
 
 See [Exposing Data][] and [Overriding Exposed Values][] for more details.
 
