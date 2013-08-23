@@ -34,7 +34,8 @@ and embed into HTML pages.
 When views/templates embed this exposed data into an HTML page, it is serialized
 as literal JavaScript. The JavaScript serialization format is limited to
 expressions that initialize namespaces and the exposed data assigned to those
-namespaces, which is a superset of JSON that includes regular expressions and functions.
+namespaces, which is a superset of JSON that includes regular expressions and
+functions.
 
 ### Features
 
@@ -44,14 +45,15 @@ following is a list of features highlighting differences when compared with
 
 - **An efficient and powerful serialization format:**
   Literal JavaScript is used to namespace exposed data that is a superset of
-  JSON and include regular expressions and functions. This avoids the cost of allocating and
-  parsing large JSON strings on the client and enables things like sharing
-  routes defined as regular expressions with a client-side URL router.
+  JSON and include regular expressions and functions. This avoids the cost of
+  allocating and parsing large JSON strings on the client and enables things
+  like sharing routes defined as regular expressions with a client-side URL
+  router.
 
 - **Smart namespacing:**
   A root namespace can be set via an app's `state namespace` setting and it will
   be prepended to namespaces passed to `expose()` unless they already contain it
-  or they start with `"window."`. The `"global"` on to which the namespaces are
+  or they start with `"window."`. The "global" on to which the namespaces are
   created can also be controlled.
 
 - **Precise data value overrides:**
@@ -246,14 +248,15 @@ JavaScript produced during serialization is limited to expressions that
 initialize namespaces and the exposed data assigned to those namespaces, which
 is a superset of JSON that includes regular expressions and functions.
 
-JavaScript, as the serialization format, is more powerful and efficient than JSON.
-It avoids the cost of allocating and parsing large JSON strings on the client
-and enables things like sharing routes defined as regular expressions with a 
-client-side URL router.
+JavaScript, as the serialization format, is more powerful and efficient than
+JSON. It avoids the cost of allocating and parsing large JSON strings on the
+client and enables things like sharing routes defined as regular expressions
+with a client-side URL router.
 
 The special `app.locals.state` and `res.locals.state` objects contain a custom
-`toString()` method implementation, which serializes the objects to JavaScript that is
-human readable and can be embedded inside a `<script>` element in an HTML page.
+`toString()` method implementation, which serializes the objects to JavaScript
+that is human readable and can be embedded inside a `<script>` element in an
+HTML page.
 
 The following example shows a series of `expose()` calls and the resulting
 output from serialization:
@@ -291,8 +294,8 @@ wrapper functions, which can be serialized.
 ### Embedding Data in HTML with Templates
 
 To pass along the exposed configuration and state data to the client-side
-JavaScript code, it needs to be embedded in a
-`<script>` element of the app's HTML pages.
+JavaScript code, it needs to be embedded in a `<script>` element of the app's
+HTML pages.
 
 In Express, `res.render()` is used to render a view/template and send the
 response to the client. When rendering, Express sets up a context, which is an
@@ -321,8 +324,9 @@ serialized `state` object:
 ```
 
 **Note:** In this example triple-mustaches (`{{{ }}}`) are used so that
-Handlebars does _not_ HTML-escape the value. Handlebars will automatically call the
-`toString()` method on the special `state` object, which renders the JavaScript.
+Handlebars does _not_ HTML-escape the value. Handlebars will automatically call
+the `toString()` method on the special `state` object, which renders the
+JavaScript.
 
 
 [Handlebars]: http://handlebarsjs.com/
@@ -371,8 +375,8 @@ See [Setting a Root Namespace][] for more details.
 ### App Settings
 
 The following settings use the [Express Settings][] feature and only apply to
-the app which they are `set()`. These app settings take precedence over the Express
-State's global configuration settings above.
+the app which they are `set()`. These app settings take precedence over the
+Express State's global configuration settings above.
 
 #### `state local`
 
@@ -408,9 +412,9 @@ See [Setting a Root Namespace][] for more details.
 
 #### `extend (app)`
 
-A function exported from the Express State module that extends the
-functionality of the specified Express `app` by adding the two `expose()`
-methods: `app.expose()` and `res.expose()`.
+A function exported from the Express State module that extends the functionality
+of the specified Express `app` by adding the two `expose()` methods:
+`app.expose()` and `res.expose()`.
 
 It's perfectly fine for the same Express app to be extended more than once;
 after the first time the app is extended, the subsequent `extend()` calls will
