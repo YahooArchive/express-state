@@ -4,10 +4,19 @@ Express State Change History
 NEXT
 ----
 
+* __[!]__ Unsafe HTML characters in string values are now encoded to their
+  Unicode counterparts during serialization to protected against XSS attacks.
+  The encoded characters will `===` the non-encoded characters so there's no
+  worry of this messing up application code. While this change makes Express
+  State safer, **untrusted user input should always be escaped!** ([#11][])
+
+* Added "Untrusted User Input" section to README docs.
+
 * Improved README docs to be clearer and better organized. ([#10][]: @zhouyaoji)
 
 
 [#10]: https://github.com/yahoo/express-state/issues/10
+[#11]: https://github.com/yahoo/express-state/issues/11
 
 
 1.0.0 (2013-08-15)
