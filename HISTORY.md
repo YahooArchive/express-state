@@ -1,8 +1,8 @@
 Express State Change History
 ============================
 
-NEXT
-----
+1.0.1 (2013-10-16)
+------------------
 
 * __[!]__ Unsafe HTML characters in string values are now encoded to their
   Unicode counterparts during serialization to protected against XSS attacks.
