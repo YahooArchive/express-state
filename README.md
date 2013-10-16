@@ -196,6 +196,26 @@ element and reopen a new one.
 Even with the basic XSS protection Express State provides, it's still important
 to _always_ escape untrusted user input.
 
+#### Exposing Functions
+
+Express State allows for functions to be serialized and sent to the browser, but
+this has a few limiations and practical constraints:
+
+* A `TypeError` will be thrown if a native built-in function is being
+  serialized, like the `Number` constructor. Native built-ins should be called
+  in wrapper functions, which can be serialized.
+
+* Functions should only be exposed if they are dependency free and monadic in
+  nature. The original scope in which a function defined is not gauranteed to be
+  present in the client-side environment. If a function references variables or
+  has other dependencies outside its scope, it's likely not to work properly.
+
+* Application code _should not_ be sent to the browser by exposing it via
+  Express State. That would be a misuse of this library and it's recommended
+  that client-side code be organized into servable files or modules allowing the
+  browser to download the code via standard `<script src>` elements or a script
+  loader.
+
 ### Setting a Root Namespace
 
 A common practice is to set a root namespace for an app so all of its exposed
@@ -309,7 +329,8 @@ g.a.very.big.ns = function () { return 'bla'; };
 
 **Note:** A `TypeError` will be thrown if a native built-in function is being
 serialized, like the `Number` constructor. Native built-ins should be called in
-wrapper functions, which can be serialized.
+wrapper functions, which can be serialized. See the [Exposing Functions][]
+section.
 
 ### Embedding Data in HTML with Templates
 
@@ -352,6 +373,7 @@ JavaScript. See the [Untrusted User Input][] section above.
 [Handlebars]: http://handlebarsjs.com/
 [OWASP]: http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
 [Untrusted User Input]: #untrusted-user-input
+[Exposing Functions]: #exposing-functions
 
 
 Examples
@@ -479,7 +501,8 @@ input is _always_ escaped before it passed to this method.
 
 **Note:** A `TypeError` will be thrown if a native built-in function is being
 serialized, like the `Number` constructor. Native built-ins should be called in
-wrapper functions, which can be serialized.
+wrapper functions, which can be serialized. See the [Exposing Functions][]
+section.
 
 See [Exposing Data][] and [Overriding Exposed Values][] for more details.
 

@@ -10,13 +10,15 @@ NEXT
   worry of this messing up application code. While this change makes Express
   State safer, **untrusted user input should always be escaped!** ([#11][])
 
-* Added "Untrusted User Input" section to README docs.
+* Added "Untrusted User Input" and "Exposing Functions" sections to the README.
+  ([#12][])
 
 * Improved README docs to be clearer and better organized. ([#10][]: @zhouyaoji)
 
 
 [#10]: https://github.com/yahoo/express-state/issues/10
 [#11]: https://github.com/yahoo/express-state/issues/11
+[#12]: https://github.com/yahoo/express-state/issues/12
 
 
 1.0.0 (2013-08-15)
