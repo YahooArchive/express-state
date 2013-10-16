@@ -5,13 +5,15 @@ Express State
 [![Dependency Status](https://gemnasium.com/yahoo/express-state.png)](https://gemnasium.com/yahoo/express-state)
 [![npm Version](https://badge.fury.io/js/express-state.png)](https://npmjs.org/package/express-state)
 
+Share configuration and state data of an [Express][] app with the client-side
+via JavaScript.
+
+
 [Express]: https://github.com/visionmedia/express
+
 
 Overview
 --------
-
-The Express State package allows you to share configuration and state data of an [Express][] 
-app with the client-side via JavaScript.
 
 ### Goals
 
@@ -332,12 +334,15 @@ JavaScript.
 [Handlebars]: http://handlebarsjs.com/
 
 
-Example
--------
+Examples
+--------
 
-For basic usage, see this 
-[simple Express app](https://github.com/yahoo/express-state/tree/master/examples/basic) 
-that uses Express State and can be run.
+### [Basic Usage][]
+
+A runnable example of the most basic Express app that uses Express State.
+
+
+[Basic Usage]: https://github.com/yahoo/express-state/tree/master/examples/basic
 
 
 API
@@ -350,23 +355,22 @@ values to these properties affects all Express apps extended with this Express
 State module instance. To set these values for a specific app, use
 [App Settings][].
 
-#### `local = "{string_property}"`
+#### `local = "state"`
 
-Use `local = "{string_property}"` to attach a string property to `app.locals` and 
-`res.locals`, where Express State creates its special objects used to store and serialize 
-exposed data.
+A string property name on `app.locals` and `res.locals` where Express State
+creates its special objects used to store and serialize exposed data.
 
-By default, Express State will attach the string property `state`:
+By default, Express State will create these objects:
 
 * `app.locals.state`
 * `res.locals.state`
 
-#### `namespace = {string_namespace}`
+#### `namespace = null`
 
-The root namespace is a string namespace that should be prepended on the namespaces 
-provided to `app.expose()` and `res.expose()` method calls. By default, no root 
-namespace is used (`namespace = null`), and namespaces are created directly 
-on the global (`window`) object in the browser.
+The root namespace is a string that should be prepended on the namespaces
+provided to `app.expose()` and `res.expose()` method calls. By default, no root
+namespace is used, and namespaces are created directly on the global (`window`)
+object in the browser.
 
 See [Setting a Root Namespace][] for more details.
 
@@ -378,8 +382,9 @@ Express State's global configuration settings above.
 
 #### `state local`
 
-Use `state local` to create a property on `app.locals` and `res.locals` where Express State
-creates its special objects used to store and serialize exposed data.
+Use `state local` to create a property on `app.locals` and `res.locals` where
+Express State creates its special objects used to store and serialize exposed
+data.
 
 By default, no value is set, so Express State's exported `local` configuration
 value is used.
@@ -393,10 +398,10 @@ app.set('state local', 'exposed');
 
 #### `state namespace`
 
-Use `state namespace` to create a root namespace that should be prepended on the namespaces 
-provided to `app.expose()` and `res.expose()` method calls. By default, no root namespace 
-is used, and namespaces are created directly on the global (`window`) object in the
-browser.
+Use `state namespace` to create a root namespace that should be prepended on the
+namespaces provided to `app.expose()` and `res.expose()` method calls. By
+default, no root namespace is used, and namespaces are created directly on the
+global (`window`) object in the browser.
 
 The following example sets the root namespace to `"MY_APP"`:
 
@@ -410,9 +415,9 @@ See [Setting a Root Namespace][] for more details.
 
 #### `extend (app)`
 
-This function is exported from the Express State module that extends the functionality
-of the specified Express `app` by adding the two `expose()` methods:
-`app.expose()` and `res.expose()`.
+This function is exported from the Express State module that extends the
+functionality of the specified Express `app` by adding the two `expose()`
+methods: `app.expose()` and `res.expose()`.
 
 It's perfectly fine for the same Express app to be extended more than once;
 after the first time the app is extended, the subsequent `extend()` calls will

@@ -1,6 +1,15 @@
 Express State Change History
 ============================
 
+NEXT
+----
+
+* Improved README docs to be clearer and better organized. ([#10][]: @zhouyaoji)
+
+
+[#10]: https://github.com/yahoo/express-state/issues/10
+
+
 1.0.0 (2013-08-15)
 ------------------
 
