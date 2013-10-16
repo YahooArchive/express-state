@@ -156,4 +156,11 @@ describe('serialize', function () {
             expect(re.source).to.equal('\\..*');
         });
     });
+
+    describe('XSS', function () {
+        it('should encode unsafe HTML chars to Unicode', function () {
+            expect(serialize('</script>')).to.equal('"\\u003C\\u002Fscript\\u003E"');
+            expect(eval(serialize('</script>'))).to.equal('</script>');
+        });
+    });
 });
