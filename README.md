@@ -199,22 +199,22 @@ to _always_ escape untrusted user input.
 #### Exposing Functions
 
 Express State allows for functions to be serialized and sent to the browser, but
-this has a few limiations and practical constraints:
+this has a few limitations and practical constraints:
 
 * A `TypeError` will be thrown if a native built-in function is being
   serialized, like the `Number` constructor. Native built-ins should be called
   in wrapper functions, which can be serialized.
 
 * Functions should only be exposed if they are dependency free and monadic in
-  nature. The original scope in which a function defined is not gauranteed to be
+  nature. The original scope in which a function defined is not guaranteed to be
   present in the client-side environment. If a function references variables or
   has other dependencies outside its scope, it's likely not to work properly.
 
 * Application code _should not_ be sent to the browser by exposing it via
   Express State. That would be a misuse of this library and it's recommended
-  that client-side code be organized into servable files or modules allowing the
-  browser to download the code via standard `<script src>` elements or a script
-  loader.
+  that client-side code be organized into serve-able files or modules allowing
+  the browser to download the code via standard `<script src="">` elements or a
+  script loader.
 
 ### Setting a Root Namespace
 
