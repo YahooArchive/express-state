@@ -5,15 +5,15 @@ Express State
 [![Dependency Status](https://gemnasium.com/yahoo/express-state.png)](https://gemnasium.com/yahoo/express-state)
 [![npm Version](https://badge.fury.io/js/express-state.png)](https://npmjs.org/package/express-state)
 
-Share configuration and state data of an [Express][] app with the client-side
-via JavaScript.
-
-
 [Express]: https://github.com/visionmedia/express
 
+Overview
+--------
 
-Goals, Overview & Features
---------------------------
+The Express State package allows you to share configuration and state data of an [Express][] 
+app with the client-side via JavaScript.
+
+### Goals
 
 Express State is designed to make it easy to share configuration and state data
 from the server to the client. It can be used to share any data that needs to be
@@ -24,9 +24,9 @@ Progressively enhanced Web apps can be built by rendering an app's initial state
 on the server and using Express State as the conduit through which the server
 passes data and control over to the client-side JavaScript code.
 
-### Overview
+### How It Works
 
-Configuration and state data is exposed to client-side JavaScript via two
+Configuration and state data are exposed to client-side JavaScript via two
 methods: `app.expose()` and `res.expose()`, both of which make the data
 available on a special `state` "locals" object for views/templates to serialize
 and embed into HTML pages.
@@ -121,7 +121,7 @@ request/response's scope via `app.expose()` and `res.expose()` respectively.
 Express State uses Express's built-in "locals" system. When data is exposed at
 the app's scope, a special `app.locals.state` object is created and used as the
 backing store for all `app.expose()` calls. Express also merges `app.locals`
-with `res.locals` to create the context object in which views/templates are
+with `res.locals` to create the `context` object in which views/templates are
 rendered. This means that, by default, data exposed at the app's scope will also
 be present when rendering views/templates for _all_ requests.
 
@@ -131,7 +131,7 @@ the request scope will also contain exposed data from the app's scope. If values
 for the same namespace are exposed at both scopes, the request/response scope
 takes precedence and shadows the value at the app's scope.
 
-#### Exposing App Scoped Data
+#### Exposing App-Scoped Data
 
 When data that needs to be exposed to the client-side JavaScript code is _not_
 request-specific and should be available to all requests, it should be exposed
@@ -146,10 +146,10 @@ app.expose({
 }, 'MY_APP.Flickr');
 ```
 
-The client-side JavaScript code can now lookup the Flickr API key at
+The client-side JavaScript code can now look up the Flickr API key at
 `MY_APP.Flickr.api_key` when it needs to make a request to Flickr's API.
 
-#### Exposing Request Scoped Data
+#### Exposing Request-Scoped Data
 
 When data that needs to be exposed to the client-side JavaScript _is_
 request-specific, it should be exposed at the request/response's scope using
@@ -209,7 +209,7 @@ a specific namespace on the client.
 Objects that are exposed through either `expose()` method are stored by
 reference, and serialization is done lazily. This means the objects are still
 "live" after they've been exposed. An object can be exposed early during the
-lifecycle of a request and updated up until the response is sent.
+life cycle of a request and updated up until the response is sent.
 
 The following is a contrived example, but shows how values can be overridden at
 any time and at any scope:
@@ -266,7 +266,7 @@ app.expose({bar: 'bar'}, 'foo');
 app.expose(/baz/, 'foo.baz');
 app.expose(function () { return 'bla'; }, 'a.very.big.ns');
 
-// Seralize `app.locals.state` and log the result.
+// Serialize `app.locals.state` and log the result.
 console.log(app.locals.state.toString());
 ```
 
@@ -332,15 +332,12 @@ JavaScript.
 [Handlebars]: http://handlebarsjs.com/
 
 
-Examples
---------
+Example
+-------
 
-### [Basic Usage][]
-
-A runnable example of the most basic Express app that uses Express State.
-
-
-[Basic Usage]: https://github.com/yahoo/express-state/tree/master/examples/basic
+For basic usage, see this 
+[simple Express app](https://github.com/yahoo/express-state/tree/master/examples/basic) 
+that uses Express State and can be run.
 
 
 API
@@ -353,22 +350,23 @@ values to these properties affects all Express apps extended with this Express
 State module instance. To set these values for a specific app, use
 [App Settings][].
 
-#### `local = "state"`
+#### `local = "{string_property}"`
 
-A string property name on `app.locals` and `res.locals` where Express State
-creates its special objects used to store and serialize exposed data.
+Use `local = "{string_property}"` to attach a string property to `app.locals` and 
+`res.locals`, where Express State creates its special objects used to store and serialize 
+exposed data.
 
-By default, Express State will create these objects:
+By default, Express State will attach the string property `state`:
 
 * `app.locals.state`
 * `res.locals.state`
 
-#### `namespace = null`
+#### `namespace = {string_namespace}`
 
-A string root namespace which should be prepended on the namespaces provided to
-`app.expose()` and `res.expose()` method calls. By default, no root namespace is
-used, and namespaces are created directly on the global (`window`) object in the
-browser.
+The root namespace is a string namespace that should be prepended on the namespaces 
+provided to `app.expose()` and `res.expose()` method calls. By default, no root 
+namespace is used (`namespace = null`), and namespaces are created directly 
+on the global (`window`) object in the browser.
 
 See [Setting a Root Namespace][] for more details.
 
@@ -380,7 +378,7 @@ Express State's global configuration settings above.
 
 #### `state local`
 
-A string property name on `app.locals` and `res.locals` where Express State
+Use `state local` to create a property on `app.locals` and `res.locals` where Express State
 creates its special objects used to store and serialize exposed data.
 
 By default, no value is set, so Express State's exported `local` configuration
@@ -395,9 +393,9 @@ app.set('state local', 'exposed');
 
 #### `state namespace`
 
-A string root namespace that should be prepended on the namespaces provided to
-`app.expose()` and `res.expose()` method calls. By default, no root namespace is
-used, and namespaces are created directly on the global (`window`) object in the
+Use `state namespace` to create a root namespace that should be prepended on the namespaces 
+provided to `app.expose()` and `res.expose()` method calls. By default, no root namespace 
+is used, and namespaces are created directly on the global (`window`) object in the
 browser.
 
 The following example sets the root namespace to `"MY_APP"`:
@@ -412,7 +410,7 @@ See [Setting a Root Namespace][] for more details.
 
 #### `extend (app)`
 
-A function exported from the Express State module that extends the functionality
+This function is exported from the Express State module that extends the functionality
 of the specified Express `app` by adding the two `expose()` methods:
 `app.expose()` and `res.expose()`.
 
