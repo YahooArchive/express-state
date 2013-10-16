@@ -47,7 +47,7 @@ following is a list of features highlighting differences when compared with
 
 - **An efficient and powerful serialization format:**
   Literal JavaScript is used to namespace exposed data that is a superset of
-  JSON and include regular expressions and functions. This avoids the cost of
+  JSON and includes regular expressions and functions. This avoids the cost of
   allocating and parsing large JSON strings on the client and enables things
   like sharing routes defined as regular expressions with a client-side URL
   router.
