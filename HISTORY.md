@@ -10,6 +10,8 @@ NEXT
   worry of this messing up application code. While this change makes Express
   State safer, **untrusted user input should always be escaped!** ([#11][])
 
+* Added "Untrusted User Input" section to README docs.
+
 
 [#11]: https://github.com/yahoo/express-state/issues/11
 

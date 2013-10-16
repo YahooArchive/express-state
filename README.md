@@ -176,6 +176,24 @@ app.use(function (req, res, next) {
 The client-side JavaScript code can now add the `X-CSRF-Token` HTTP header with
 the value at `MY_APP.CSRF_TOKEN` to all XHRs it makes to the server.
 
+#### Untrusted User Input
+
+**Always escape untrusted user input to protected against XSS attacks!**
+
+Express State provides a mechanism to expose configuration and state data as
+first-party JavaScript, which means any untrusted user input should be properly
+escaped based on the [OWASP HTML escaping recommendations][OWASP].
+
+Express State will automatically encode any `<`, `>`, `/` characters within
+string values of exposed data to their Unicode counterparts during
+serialization. This provides a basic level of protection against XSS attacks by
+not allowing the `"</script><script>"` character sequence within an exposed
+string value to be interpreted and cause the browser prematurely close a script
+element and reopen a new one.
+
+Even with the basic XSS protection Express State provides, it's still important
+to _always_ escape untrusted user input.
+
 ### Setting a Root Namespace
 
 A common practice is to set a root namespace for an app so all of its exposed
@@ -326,10 +344,12 @@ serialized `state` object:
 **Note:** In this example triple-mustaches (`{{{ }}}`) are used so that
 Handlebars does _not_ HTML-escape the value. Handlebars will automatically call
 the `toString()` method on the special `state` object, which renders the
-JavaScript.
+JavaScript. See the [Untrusted User Input][] section above.
 
 
 [Handlebars]: http://handlebarsjs.com/
+[OWASP]: http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
+[Untrusted User Input]: #untrusted-user-input
 
 
 Examples
@@ -438,6 +458,9 @@ the data is exposed, either the app's or at the request's scope.
 These two methods are used to expose configuration and state to client-side
 JavaScript by making the data available on a special `state` "locals" object for
 views/templates to serialize and embed into HTML pages.
+
+See the [Untrusted User Input][] section above, and make sure untrusted user
+input is _always_ escaped before it passed to this method.
 
 **Parameters:**
 
