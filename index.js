@@ -10,7 +10,7 @@ function extendApp(app) {
     if (app['@state']) { return app; }
 
     // Brand.
-    Object.defineProperty(app, '@state', {value: true});
+    Object.defineProperty(app, '@state', {value: exports});
 
     // Modifies the Express `app` and its `response` prototype by adding the
     // `expose()` method.
