@@ -1,6 +1,15 @@
 Express State Change History
 ============================
 
+NEXT
+----
+
+* Updated object branding used by `extend()` to assign the module's `export`
+  object as the value of the "branding". This makes it easier compare and
+  determine _which_ Express State module instance was used to extend the Express
+  app.
+
+
 1.0.1 (2013-10-16)
 ------------------
 
