@@ -9,6 +9,11 @@ NEXT
   determine _which_ Express State module instance was used to extend the Express
   app.
 
+* Added "modown" keyword to package.json ([#16][])
+
+
+[#16]: https://github.com/yahoo/express-state/issues/16
+
 
 1.0.1 (2013-10-16)
 ------------------

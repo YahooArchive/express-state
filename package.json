@@ -6,7 +6,7 @@
 
     "keywords": [
         "express", "state", "client", "expose", "data",
-        "config", "configuration", "javascript", "model", "json"
+        "config", "configuration", "json", "javascript", "model", "modown"
     ],
 
     "author": {
