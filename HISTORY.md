@@ -1,17 +1,18 @@
 Express State Change History
 ============================
 
-NEXT
-----
+1.0.2 (2013-11-05)
+------------------
 
 * Updated object branding used by `extend()` to assign the module's `export`
   object as the value of the "branding". This makes it easier compare and
   determine _which_ Express State module instance was used to extend the Express
-  app.
+  app. ([#14][])
 
 * Added "modown" keyword to package.json ([#16][])
 
 
+[#14]: https://github.com/yahoo/express-state/issues/14
 [#16]: https://github.com/yahoo/express-state/issues/16
 
 
