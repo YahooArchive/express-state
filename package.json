@@ -51,6 +51,6 @@
     },
 
     "scripts": {
-        "test": "./node_modules/istanbul/lib/cli.js cover -- ./node_modules/.bin/_mocha test/*.js --reporter spec"
+        "test": "istanbul cover -- ./node_modules/mocha/bin/_mocha test/ --reporter spec"
     }
 }
