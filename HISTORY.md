@@ -1,6 +1,18 @@
 Express State Change History
 ============================
 
+NEXT
+----
+
+* Fixed `npm test` script so it runs on Windows. ([#17][])
+
+* Added `.npmignore` file. ([#15][])
+
+
+[#15]: https://github.com/yahoo/express-state/issues/15
+[#17]: https://github.com/yahoo/express-state/issues/17
+
+
 1.0.2 (2013-11-05)
 ------------------
 
@@ -9,7 +21,7 @@ Express State Change History
   determine _which_ Express State module instance was used to extend the Express
   app. ([#14][])
 
-* Added "modown" keyword to package.json ([#16][])
+* Added "modown" keyword to package.json. ([#16][])
 
 
 [#14]: https://github.com/yahoo/express-state/issues/14

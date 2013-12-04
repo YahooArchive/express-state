@@ -1,0 +1,7 @@
+artifacts/
+coverage/
+examples/
+test/
+.gitignore
+.npmignore
+.travis.yml
