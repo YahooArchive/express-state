@@ -8,6 +8,11 @@ NEXT
 
 * Added `.npmignore` file. ([#15][])
 
+* Tweaked closure that's wrapped around the serialized data and namespace
+  initialization. There's no affect on app code, this is merely renaming a local
+  variable from `g` to `root` which is the reference to the root or global
+  object that the namespaces hang off of.
+
 
 [#15]: https://github.com/yahoo/express-state/issues/15
 [#17]: https://github.com/yahoo/express-state/issues/17

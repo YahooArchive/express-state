@@ -313,17 +313,17 @@ console.log(app.locals.state.toString());
 The output of the `console.log()` call would be:
 
 ```javascript
-(function (g) {
+(function (root) {
 // -- Namespaces --
-g.foo || (g.foo = {});
-g.a || (g.a = {});
-g.a.very || (g.a.very = {});
-g.a.very.big || (g.a.very.big = {});
+root.foo || (root.foo = {});
+root.a || (root.a = {});
+root.a.very || (root.a.very = {});
+root.a.very.big || (root.a.very.big = {});
 
 // -- Exposed --
-g.foo = {"bar":"bar"};
-g.foo.baz = /baz/;
-g.a.very.big.ns = function () { return 'bla'; };
+root.foo = {"bar":"bar"};
+root.foo.baz = /baz/;
+root.a.very.big.ns = function () { return 'bla'; };
 }(this));
 ```
 
