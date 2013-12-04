@@ -1,8 +1,8 @@
 Express State Change History
 ============================
 
-NEXT
-----
+1.0.3 (2013-12-04)
+------------------
 
 * Fixed `npm test` script so it runs on Windows. ([#17][])
 
