@@ -1,56 +1,56 @@
 {
-    "name"       : "express-state",
-    "description": "Share server-side state with the client-side of an Express app via JavaScript.",
-    "version"    : "1.0.3",
-    "homepage"   : "https://github.com/yahoo/express-state",
-
-    "keywords": [
-        "express", "state", "client", "expose", "data",
-        "config", "configuration", "json", "javascript", "model", "modown"
-    ],
-
-    "author": {
-        "name" : "Eric Ferraiuolo",
-        "email": "eferraiuolo@gmail.com",
-        "url"  : "http://ericf.me/"
-    },
-
-    "main": "index",
-
-    "directories": {
-        "lib"    : "./lib",
-        "example": "./examples"
-    },
-
-    "repository": {
-        "type": "git",
-        "url" : "git://github.com/yahoo/express-state.git"
-    },
-
-    "bugs": {
-        "url": "https://github.com/yahoo/express-state/issues"
-    },
-
-    "engines": {
-        "node": ">=0.8.x",
-        "npm" : ">=1.2.10"
-    },
-
-    "peerDependencies": {
-        "express": "3.x"
-    },
-
-    "devDependencies": {
-        "chai"               : "*",
-        "express"            : "3.x",
-        "express3-handlebars": "*",
-        "istanbul"           : "*",
-        "mocha"              : "*",
-        "mockery"            : "*",
-        "xunit-file"         : "*"
-    },
-
-    "scripts": {
-        "test": "istanbul cover -- ./node_modules/mocha/bin/_mocha test/unit/ --reporter spec"
-    }
+  "name": "express-state",
+  "description": "Share server-side state with the client-side of an Express app via JavaScript.",
+  "version": "1.0.3",
+  "homepage": "https://github.com/yahoo/express-state",
+  "keywords": [
+    "express",
+    "state",
+    "client",
+    "expose",
+    "data",
+    "config",
+    "configuration",
+    "json",
+    "javascript",
+    "model",
+    "modown"
+  ],
+  "author": {
+    "name": "Eric Ferraiuolo",
+    "email": "eferraiuolo@gmail.com",
+    "url": "http://ericf.me/"
+  },
+  "main": "index",
+  "directories": {
+    "lib": "./lib",
+    "example": "./examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yahoo/express-state.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yahoo/express-state/issues"
+  },
+  "engines": {
+    "node": ">=0.8.x",
+    "npm": ">=1.2.10"
+  },
+  "peerDependencies": {
+    "express": "3.x"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "express": "3.x",
+    "express3-handlebars": "*",
+    "istanbul": "*",
+    "mocha": "*",
+    "mockery": "*",
+    "xunit-file": "*",
+    "benchmark": "~1.0.0"
+  },
+  "scripts": {
+    "test": "istanbul cover -- ./node_modules/mocha/bin/_mocha test/unit/ --reporter spec"
+  }
 }
