@@ -1,7 +1,7 @@
 /* global describe, it, beforeEach */
 'use strict';
 
-var serialize = require('../lib/serialize'),
+var serialize = require('../../lib/serialize'),
     expect    = require('chai').expect;
 
 describe('serialize', function () {

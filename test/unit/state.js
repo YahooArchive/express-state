@@ -5,7 +5,7 @@ var expressUtils = require('express/lib/utils'),
     expect       = require('chai').expect,
     express      = require('express'),
 
-    state = require('../');
+    state = require('../../');
 
 describe('state', function () {
     var app;

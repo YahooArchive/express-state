@@ -1,7 +1,7 @@
 /* global describe, it, beforeEach, afterEach */
 'use strict';
 
-var Exposed = require('../lib/exposed'),
+var Exposed = require('../../lib/exposed'),
     expect  = require('chai').expect;
 
 describe('Exposed', function () {

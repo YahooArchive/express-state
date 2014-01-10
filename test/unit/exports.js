@@ -1,7 +1,7 @@
 /* global describe, it */
 'use strict';
 
-var state  = require('../'),
+var state  = require('../../'),
     expect = require('chai').expect;
 
 describe('exports', function () {
