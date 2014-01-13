@@ -15,7 +15,7 @@ var suiteConfig = {
     },
 
     onComplete: function () {
-        console.log('\n');
+        console.log('');
     }
 };
 

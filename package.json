@@ -51,6 +51,7 @@
     "benchmark": "~1.0.0"
   },
   "scripts": {
-    "test": "istanbul cover -- ./node_modules/mocha/bin/_mocha test/unit/ --reporter spec"
+    "test": "istanbul cover -- ./node_modules/mocha/bin/_mocha test/unit/ --reporter spec",
+    "benchmark": "node test/benchmark/serialize.js"
   }
 }
