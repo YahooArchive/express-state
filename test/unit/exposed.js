@@ -5,6 +5,13 @@ var Exposed = require('../../lib/exposed'),
     expect  = require('chai').expect;
 
 describe('Exposed', function () {
+    var window, evalExposed;
+
+    beforeEach(function () {
+        window      = {};
+        evalExposed = function (exposed) { eval(String(exposed)); }.bind(window);
+    });
+
     it('should be a function', function () {
         expect(Exposed).to.be.a('function');
     });
@@ -37,9 +44,12 @@ describe('Exposed', function () {
                 expect(sup).to.have.ownProperty('foo');
                 expect(sub).to.have.property('foo');
                 expect(sub.foo).to.equal(sup.foo);
+
+                evalExposed(sub);
+                expect(window).to.have.ownProperty('foo');
             });
 
-            it('should inherit new namespaces', function () {
+            it('should inherit new namespaces form super', function () {
                 var sup = Exposed.create(),
                     sub = Exposed.create(sup);
 
@@ -47,6 +57,9 @@ describe('Exposed', function () {
                 expect(sup).to.have.ownProperty('foo');
                 expect(sub).to.have.property('foo');
                 expect(sub.foo).to.equal(sup.foo);
+
+                evalExposed(sub);
+                expect(window).to.have.ownProperty('foo');
             });
 
             it('should not expose own namespaces to super', function () {
@@ -56,6 +69,75 @@ describe('Exposed', function () {
                 sub.add('baz', 'baz');
                 expect(sup).to.not.have.property('baz');
                 expect(sub).to.have.ownProperty('baz');
+            });
+
+            it('should override shadow namespaces on super', function () {
+                var sup = Exposed.create(),
+                    sub = Exposed.create(sup);
+
+                sup.add('foo.bar', 'bar');
+                sub.add('foo', 'foo');
+
+                evalExposed(sub);
+                expect(window).to.have.ownProperty('foo');
+                expect(window.foo).to.equal('foo');
+                expect(window.foo.bar).to.be.undefined;
+            });
+
+            it('should inherit previous serialized values', function () {
+                var data = {bar: 'bar'},
+                    sup  = Exposed.create(),
+                    sub;
+
+                sup.add('foo', data, {cache: true});
+                sub = Exposed.create(sup);
+
+                evalExposed(sub);
+                expect(window).to.have.ownProperty('foo');
+                expect(window.foo.bar).to.equal('bar');
+
+                // Mutate exposed object.
+                data.bar = 'BAR';
+                expect(sub.foo.bar).to.equal('BAR');
+
+                // Check that serialized value was *not* updated.
+                evalExposed(sub);
+                expect(window.foo.bar).to.equal('bar');
+            });
+
+            it('should inherit new serialized values from super', function () {
+                var data = {bar: 'bar'},
+                    sup  = Exposed.create(),
+                    sub  = Exposed.create(sup);
+
+                sup.add('foo', data, {cache: true});
+
+                evalExposed(sub);
+                expect(window).to.have.ownProperty('foo');
+                expect(window.foo.bar).to.equal('bar');
+
+                // Mutate exposed object.
+                data.bar = 'BAR';
+                expect(sub.foo.bar).to.equal('BAR');
+
+                // Check that serialized value was *not* updated.
+                evalExposed(sub);
+                expect(window.foo.bar).to.equal('bar');
+            });
+
+            it('should not expose own serialized values to super', function () {
+                var data = {bar: 'bar'},
+                    sup  = Exposed.create(),
+                    sub  = Exposed.create(sup);
+
+                sub.add('foo', data, {cache: true});
+
+                evalExposed(sub);
+                expect(window).to.have.ownProperty('foo');
+                expect(window.foo.bar).to.equal('bar');
+
+                evalExposed(sup);
+                expect(sup).to.not.have.property('foo');
             });
         });
     });
@@ -94,7 +176,7 @@ describe('Exposed', function () {
         });
     });
 
-    describe('#add( namespace, value )', function () {
+    describe('#add( namespace, value [, options] )', function () {
         var exposed;
 
         beforeEach(function () {
@@ -154,15 +236,54 @@ describe('Exposed', function () {
             expect(data.bar).to.equal('bar');
             expect(exposed['foo.bar']).to.equal('BAR');
         });
+
+        it('should accept an `options` argument', function () {
+            exposed.add('foo', 10, {});
+            expect(exposed.foo).to.equal(10);
+        });
+
+        it('should not cache serialized values when `options.cache` is falsy', function () {
+            var data = {bar: 'bar'};
+
+            exposed.add('foo', data, {cache: false});
+
+            evalExposed(exposed);
+            expect(window).to.have.ownProperty('foo');
+            expect(window.foo.bar).to.equal('bar');
+
+            // Mutate exposed object.
+            data.bar = 'BAR';
+            expect(exposed.foo.bar).to.equal('BAR');
+
+            // Check that serialized value was updated.
+            evalExposed(exposed);
+            expect(window.foo.bar).to.equal('BAR');
+        });
+
+        it('should cache serialized values when `options.cache` is truthy', function () {
+            var data = {bar: 'bar'};
+
+            exposed.add('foo', data, {cache: true});
+
+            evalExposed(exposed);
+            expect(window).to.have.ownProperty('foo');
+            expect(window.foo.bar).to.equal('bar');
+
+            // Mutate exposed object.
+            data.bar = 'BAR';
+            expect(exposed.foo.bar).to.equal('BAR');
+
+            // Check that serialized value was *not* updated; i.e., cached.
+            evalExposed(exposed);
+            expect(window.foo.bar).to.equal('bar');
+        });
     });
 
     describe('#toString()', function () {
-        var exposed, window, evalExposed;
+        var exposed;
 
         beforeEach(function () {
-            window      = {};
-            exposed     = new Exposed();
-            evalExposed = function () { eval(String(exposed)); }.bind(window);
+            exposed = new Exposed();
         });
 
         it('should be a function', function () {
@@ -178,7 +299,7 @@ describe('Exposed', function () {
             exposed.add('foo');
             exposed.add('bar');
 
-            evalExposed();
+            evalExposed(exposed);
             expect(window).to.have.ownProperty('foo');
             expect(window).to.have.ownProperty('bar');
         });
@@ -186,7 +307,7 @@ describe('Exposed', function () {
         it('should initialize deep namespaces', function () {
             exposed.add('a.b.c.d.e.f.g.h.i.j.k', {});
 
-            evalExposed();
+            evalExposed(exposed);
             expect(window).to.have.deep.property('a.b.c.d.e.f.g.h.i.j.k');
         });
 
@@ -202,7 +323,7 @@ describe('Exposed', function () {
             exposed.add('cre', new RegExp('asdf'));
             exposed.add('lre', /asdf/);
 
-            evalExposed();
+            evalExposed(exposed);
             expect(window.str).to.equal('string');
             expect(window.num).to.equal(0);
             expect(window.obj).to.deep.equal({foo: 'foo'});
@@ -219,7 +340,7 @@ describe('Exposed', function () {
             exposed.add('foo', 'foo');
             exposed.add('foo', 'FOO');
 
-            evalExposed();
+            evalExposed(exposed);
             expect(window.foo).to.be.equal('FOO');
         });
 
@@ -228,7 +349,7 @@ describe('Exposed', function () {
             exposed.add('foo.bar', 'BAR');
             exposed.add('foo.baz', 'baz');
 
-            evalExposed();
+            evalExposed(exposed);
             expect(window.foo).to.be.an('object');
             expect(window.foo.bar).to.equal('BAR');
             expect(window.foo.baz).to.equal('baz');
