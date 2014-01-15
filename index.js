@@ -20,8 +20,19 @@ function extendApp(app) {
     return app;
 }
 
-function expose(obj, namespace, local) {
+function expose(obj, namespace, local, options) {
     /* jshint validthis:true */
+
+    if (namespace && typeof namespace === 'object') {
+        options   = namespace;
+        namespace = options.namespace;
+        local     = options.local;
+    } else if (local && typeof local === 'object') {
+        options = local;
+        local   = options.local;
+    } else if (typeof local === 'string') {
+        // TODO: warn about deprecated API.
+    }
 
     var app           = this.app || this,
         appLocals     = this.app && this.app.locals,
@@ -49,7 +60,7 @@ function expose(obj, namespace, local) {
         // Only get the keys of enumerable objects.
         if ((type === 'object' || type === 'function') && obj !== null) {
             Object.keys(obj).forEach(function (key) {
-                exposed.add(key, obj[key]);
+                exposed.add(key, obj[key], options);
             });
         }
 
@@ -66,5 +77,5 @@ function expose(obj, namespace, local) {
         namespace = rootNamespace;
     }
 
-    exposed.add(namespace, obj);
+    exposed.add(namespace, obj, options);
 }
