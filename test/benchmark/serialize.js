@@ -169,23 +169,26 @@ var ytAppCached = expose(
     ], {cache: true}
 );
 
+var ytAppCacheKeys = Object.keys(ytFixture.App.Cache).map(function (key) {
+    return 'App.Cache.' + key;
+});
+
 var ytRes = expose(
     Exposed.create(ytApp),
     ytFixture,
-    Object.keys(ytFixture.App.Cache)
+    ytAppCacheKeys
 );
-
 
 var ytResAppCached = expose(
     Exposed.create(ytAppCached),
     ytFixture,
-    Object.keys(ytFixture.App.Cache)
+    ytAppCacheKeys
 );
 
 var ytResCached = expose(
     Exposed.create(ytAppCached),
     ytFixture,
-    Object.keys(ytFixture.App.Cache),
+    ytAppCacheKeys,
     {cache: true}
 );
 
