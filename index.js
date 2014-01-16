@@ -38,7 +38,7 @@ function expose(obj, namespace, options) {
         local     = options.local;
     } else if (options && typeof options === 'string') {
         // TODO: warn about deprecated API.
-        local = options;
+        local   = options;
         options = null;
     } else {
         local = options && options.local;
