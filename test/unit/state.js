@@ -58,7 +58,7 @@ describe('state', function () {
         });
 
         describe('DEPRECATED: expose( obj [, namespace [, local]] )', function () {
-            it('should use third argumetn as `local`', function () {
+            it('should use third argument as `local`', function () {
                 expose({foo: 'foo'}, 'App.data', 'data');
                 expect(locals.data).to.include.key('App.data');
                 expect(locals.data['App.data']).to.include.key('foo');
@@ -160,7 +160,7 @@ describe('state', function () {
 
             it('should be overrideable when calling app.expose()', function () {
                 app.set('state local', 'javascript');
-                app.expose({foo: 'foo'}, null, 'data');
+                app.expose({foo: 'foo'}, null, {local: 'data'});
                 expect(app.locals.data).to.include.key('foo');
             });
         });

@@ -37,9 +37,13 @@ function expose(obj, namespace, options) {
         namespace = options.namespace;
         local     = options.local;
     } else if (options && typeof options === 'string') {
-        // TODO: warn about deprecated API.
         local   = options;
         options = null;
+
+        // Warn about deprecated API signature:
+        // expose( obj [, namespace [, local]] )
+        console.warn('(express-state) warning: ' +
+            '`expose( obj, namespace, local)` signature has been deprecated.');
     } else {
         local = options && options.local;
     }
