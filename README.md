@@ -70,6 +70,9 @@ following is a list of features highlighting differences when compared with
   calls will be serialized. Serialization can happen at anytime, on demand, by
   calling the `toString()` method on `state` "locals" objects.
 
+  When data is not going to change the `{cache: true}` option can be set to
+  eagerly serialize exposed objects, making repeated `toString()` calls more efficient.
+
 - **Explicit extension of each Express app:** Express State's functionality has
   to be explicitly added to an Express app via the exported `extend()` function.
   This prevents problems in complex apps where multiple versions of Express
@@ -178,6 +181,31 @@ app.use(function (req, res, next) {
 The client-side JavaScript code can now add the `X-CSRF-Token` HTTP header with
 the value at `MY_APP.CSRF_TOKEN` to all XHRs it makes to the server.
 
+#### Increase Performance of Unchanging or Static Data
+
+It's common to expose app-scoped data which *will not change* during the
+lifecycle of the Express app instance. To improve per-request performance, this
+unchanging/static data can be eagerly serialized and cached by setting the
+__`{cache: true}`__ option:
+
+```js
+var CONFIG = {
+    hostname : 'example.com',
+    someOther: 'constant value'
+};
+
+app.expose(CONFIG, 'MY_APP.config', {cache: true});
+```
+
+Setting this option allows Express State to optimize the serialization process
+by keeping the serialized value around and re-using it every time the
+`toString()` method is invoked (which happens for every request.)
+
+**Note:** When a large amount of data needs to be exposed to the client-side, it
+is recommended to come up with a strategy where _all_ data which is common to
+most/every request be exposed at the app-scope with the `{cache: true}` option
+set.
+
 #### Untrusted User Input
 
 **Always escape untrusted user input to protected against XSS attacks!**
@@ -247,9 +275,10 @@ a specific namespace on the client.
 ### Overriding Exposed Values
 
 Objects that are exposed through either `expose()` method are stored by
-reference, and serialization is done lazily. This means the objects are still
-"live" after they've been exposed. An object can be exposed early during the
-life cycle of a request and updated up until the response is sent.
+reference, and serialization is done lazily (unless the `{cache: true}` option
+was set). This means the objects are still "live" after they've been exposed. An
+object can be exposed early during the life cycle of a request and updated up
+until the response is sent.
 
 The following is a contrived example, but shows how values can be overridden at
 any time and at any scope:
@@ -473,9 +502,9 @@ See [Extending an Express App][] for more details.
 
 ### Methods
 
-#### `app.expose (obj, [namespace], [local])`
+#### `app.expose (obj, [namespace], [options])`
 
-#### `res.expose (obj, [namespace], [local])`
+#### `res.expose (obj, [namespace], [options])`
 
 The two `expose()` methods behave the same, the only difference being what scope
 the data is exposed, either the app's or at the request's scope.
@@ -495,9 +524,20 @@ input is _always_ escaped before it passed to this method.
   This namespace will be prefixed with any configured root namespace unless it
   already contains the root namespace or starts with `"window."`.
 
-* `[local]`: Optional string name of the "locals" property on which to expose
-  the `obj`. This is used to specify a locals property other than the
-  configured or default (`"state"`) one.
+* `[options]`: Options which can be specified as either the second or third
+  argument to this method, and may contain the following:
+
+    * `[cache]`: Optional boolean to signal that it's safe to cache the
+      serialized form of `obj` because it won't change during the lifecycle of
+      the `app` or `res` (depending on which `expose()` method is invoked.) The eagerly serialized result is cached to greatly optimize to speed of
+      repeated calls to the `toString()` method.
+
+    * `[local]`: Optional string name of the "locals" property on which to
+      expose the `obj`. This is used to specify a locals property other than the
+      configured or default (`"state"`) one.
+
+    * `[namespace]`: Used to specify a `namespace` (described above) when
+      `options` is passed as the second argument to this method.
 
 **Note:** A `TypeError` will be thrown if a native built-in function is being
 serialized, like the `Number` constructor. Native built-ins should be called in

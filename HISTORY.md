@@ -1,6 +1,35 @@
 Express State Change History
 ============================
 
+NEXT
+----
+
+* __[!]__ Deprecated `expose( obj, namespace, local )` API signature, the third
+  argument is now `options`, use: `expose( obj, namespace, {local: local})`. The
+  deprecated signature will be removed in a future release, and logs a warning
+  when it is used.
+
+* Added `{cache: true}` option that signals Express State to eagerly serialize
+  unchanging data and reuse the result to *greatly* improve performance of
+  repeated `toString()` calls ([#19][]).
+
+* Fixed issue with `app` <-- `res` exposed data inheritance. Previously, the
+  exposed data a `res` would inherit from the `app` was locked to the state of
+  the exposed app-scope data at the time of the request. Now, if new data is
+  exposed at the app-scope during a request, it's properly inherited by the
+  request-scoped data.
+
+* Added benchmark tests. They can be run using: `npm run benchmark`. Real world
+  fixture data is used from Photos Near Me and Yahoo Tech.
+
+* Tweaked `toString()` serialization process to gather low-hanging performance
+  fruit ([#18][]).
+
+
+[#18]: https://github.com/yahoo/express-state/issues/18
+[#19]: https://github.com/yahoo/express-state/issues/19
+
+
 1.0.3 (2013-12-04)
 ------------------
 

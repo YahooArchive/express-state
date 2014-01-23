@@ -14,7 +14,7 @@ describe('state', function () {
         app = state.extend(express());
     });
 
-    describe('expose( obj, [namespace], [local] )', function () {
+    describe('expose( obj [[, namespace [, options]] | [, options]] )', function () {
         var expose, locals;
 
         beforeEach(function () {
@@ -22,7 +22,7 @@ describe('state', function () {
             locals = app.locals;
         });
 
-        it('should add a `state` object `locals` when called', function () {
+        it('should add a `state` object to `locals` when called', function () {
             expose();
             expect(locals.state).to.be.an('object');
         });
@@ -39,6 +39,30 @@ describe('state', function () {
         it('should expose objects with no namespace by using its keys', function () {
             expose({foo: 'foo'});
             expect(locals.state).to.include.key('foo');
+        });
+
+        it('should use second argument as `options`', function () {
+            expose({foo: 'foo'}, {
+                namespace: 'App.data',
+                local    : 'data'
+            });
+
+            expect(locals.data).to.include.key('App.data');
+            expect(locals.data['App.data']).to.include.key('foo');
+        });
+
+        it('should use thrid argument as `options`', function () {
+            expose({foo: 'foo'}, 'App.data', {local: 'data'});
+            expect(locals.data).to.include.key('App.data');
+            expect(locals.data['App.data']).to.include.key('foo');
+        });
+
+        describe('DEPRECATED: expose( obj [, namespace [, local]] )', function () {
+            it('should use third argument as `local`', function () {
+                expose({foo: 'foo'}, 'App.data', 'data');
+                expect(locals.data).to.include.key('App.data');
+                expect(locals.data['App.data']).to.include.key('foo');
+            });
         });
 
         describe('global .local', function () {
@@ -60,7 +84,7 @@ describe('state', function () {
 
             it('should be overridable when calling expose()', function () {
                 state.local = 'javascript';
-                expose({foo: 'foo'}, null, 'data');
+                expose({foo: 'foo'}, {local: 'data'});
                 expect(locals.data).to.include.key('foo');
             });
         });
@@ -136,7 +160,7 @@ describe('state', function () {
 
             it('should be overrideable when calling app.expose()', function () {
                 app.set('state local', 'javascript');
-                app.expose({foo: 'foo'}, null, 'data');
+                app.expose({foo: 'foo'}, null, {local: 'data'});
                 expect(app.locals.data).to.include.key('foo');
             });
         });

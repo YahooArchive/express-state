@@ -20,14 +20,33 @@ function extendApp(app) {
     return app;
 }
 
-function expose(obj, namespace, local) {
+function expose(obj, namespace, options) {
     /* jshint validthis:true */
 
     var app           = this.app || this,
         appLocals     = this.app && this.app.locals,
         locals        = this.locals,
         rootNamespace = app.get('state namespace') || exports.namespace,
-        exposed, type;
+        local, exposed, type;
+
+    // Massage arguments to support the following signatures:
+    // expose( obj [[, namespace [, options]] | [, options]] )
+    // expose( obj [, namespace [, local]] )
+    if (namespace && typeof namespace === 'object') {
+        options   = namespace;
+        namespace = options.namespace;
+        local     = options.local;
+    } else if (options && typeof options === 'string') {
+        local   = options;
+        options = null;
+
+        // Warn about deprecated API signature:
+        // expose( obj [, namespace [, local]] )
+        console.warn('(express-state) warning: ' +
+            '`expose( obj, namespace, local)` signature has been deprecated.');
+    } else {
+        local = options && options.local;
+    }
 
     if (!local) {
         local = app.get('state local') || exports.local;
@@ -49,7 +68,7 @@ function expose(obj, namespace, local) {
         // Only get the keys of enumerable objects.
         if ((type === 'object' || type === 'function') && obj !== null) {
             Object.keys(obj).forEach(function (key) {
-                exposed.add(key, obj[key]);
+                exposed.add(key, obj[key], options);
             });
         }
 
@@ -66,5 +85,5 @@ function expose(obj, namespace, local) {
         namespace = rootNamespace;
     }
 
-    exposed.add(namespace, obj);
+    exposed.add(namespace, obj, options);
 }

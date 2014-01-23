@@ -4,7 +4,7 @@
 var serialize = require('../../lib/serialize'),
     expect    = require('chai').expect;
 
-describe('serialize', function () {
+describe('serialize( obj )', function () {
     it('should be a function', function () {
         expect(serialize).to.be.a('function');
     });
