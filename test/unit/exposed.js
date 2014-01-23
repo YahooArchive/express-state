@@ -25,7 +25,7 @@ describe('Exposed', function () {
             expect(Exposed.create()).to.be.instanceOf(Exposed);
         });
 
-        describe('inhert `exposed`', function () {
+        describe('inherit `exposed`', function () {
             it('should inherit from the specified `exposed`', function () {
                 var sup = Exposed.create(),
                     sub = Exposed.create(sup);
@@ -49,7 +49,7 @@ describe('Exposed', function () {
                 expect(window).to.have.ownProperty('foo');
             });
 
-            it('should inherit new namespaces form super', function () {
+            it('should inherit new namespaces from super', function () {
                 var sup = Exposed.create(),
                     sub = Exposed.create(sup);
 
