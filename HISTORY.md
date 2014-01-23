@@ -1,8 +1,8 @@
 Express State Change History
 ============================
 
-NEXT
-----
+1.1.0 (2014-01-22)
+------------------
 
 * __[!]__ Deprecated `expose( obj, namespace, local )` API signature, the third
   argument is now `options`, use: `expose( obj, namespace, {local: local})`. The
