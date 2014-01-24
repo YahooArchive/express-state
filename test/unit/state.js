@@ -232,10 +232,26 @@ describe('state', function () {
             expect(app.locals.state.foo).to.equal('foo');
 
             res.expose('bar', 'bar');
+            expect(Object.getPrototypeOf(res.locals.state)).to.equal(app.locals.state);
             expect(res.locals.state).to.have.property('foo');
             expect(res.locals.state.foo).to.equal('foo');
             expect(res.locals.state).to.have.ownProperty('bar');
             expect(res.locals.state.bar).to.equal('bar');
+        });
+
+        it('should create app.locals.state if needed to inherit from it', function () {
+            res.expose('bar', 'bar');
+            expect(res.locals.state).to.have.ownProperty('bar');
+            expect(res.locals.state.bar).to.equal('bar');
+
+            expect(app.locals).to.have.ownProperty('state');
+            expect(Object.getPrototypeOf(res.locals.state)).to.equal(app.locals.state);
+
+            app.expose('foo', 'foo');
+            expect(app.locals.state).to.have.ownProperty('foo');
+            expect(app.locals.state.foo).to.equal('foo');
+            expect(res.locals.state).to.have.property('foo');
+            expect(res.locals.state.foo).to.equal('foo');
         });
 
         it('should override app.locals', function () {

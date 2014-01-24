@@ -24,10 +24,10 @@ function expose(obj, namespace, options) {
     /* jshint validthis:true */
 
     var app           = this.app || this,
-        appLocals     = this.app && this.app.locals,
+        appLocals     = app.locals,
         locals        = this.locals,
         rootNamespace = app.get('state namespace') || exports.namespace,
-        local, exposed, type;
+        local, appExposed, exposed, type;
 
     // Massage arguments to support the following signatures:
     // expose( obj [[, namespace [, options]] | [, options]] )
@@ -52,12 +52,17 @@ function expose(obj, namespace, options) {
         local = app.get('state local') || exports.local;
     }
 
-    exposed = locals[local];
+    appExposed = appLocals[local];
+    exposed    = locals[local];
 
+    // Makes sure there's an `Exposed` instance, and that all request-scoped
+    // instances are *always* linked to their corresponding app-scoped objects.
     if (!Exposed.isExposed(exposed)) {
-        // Creates a new `Exposed` instance, and links its prototype to the
-        // corresponding app exposed object, if one exists.
-        exposed = locals[local] = Exposed.create(appLocals && appLocals[local]);
+        if (!(app === this || Exposed.isExposed(appExposed))) {
+            appExposed = appLocals[local] = Exposed.create();
+        }
+
+        exposed = locals[local] = Exposed.create(appExposed);
     }
 
     // When no namespace is provided, expose each value of the specified `obj`
