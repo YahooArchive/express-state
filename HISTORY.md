@@ -1,8 +1,8 @@
 Express State Change History
 ============================
 
-NEXT
-----
+1.1.1 (2014-01-25)
+------------------
 
 * Made request-scope exposed data *always* inherit the app-scope exposed data.
   With this change if a request comes in before data is exposed at the
