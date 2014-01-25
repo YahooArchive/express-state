@@ -1,6 +1,19 @@
 Express State Change History
 ============================
 
+NEXT
+----
+
+* Made request-scope exposed data *always* inherit the app-scope exposed data.
+  With this change if a request comes in before data is exposed at the
+  app-scope, the `app.locals.state` object will be created first. This ensures
+  the semantics of the relationship between app- and request-scoped exposed
+  data. ([#20][])
+
+
+[#20]: https://github.com/yahoo/express-state/issues/20
+
+
 1.1.0 (2014-01-22)
 ------------------
 
