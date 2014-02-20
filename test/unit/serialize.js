@@ -52,6 +52,11 @@ describe('serialize( obj )', function () {
         it('should deserialize a JSON string to a JSON object', function () {
             expect(JSON.parse(serialize(data))).to.deep.equal(data);
         });
+
+        it('should serialize weird whitespace characters correctly', function () {
+            var ws = String.fromCharCode(8232);
+            expect(eval(serialize(ws))).to.equal(ws);
+        });
     });
 
     describe('functions', function () {
