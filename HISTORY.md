@@ -1,6 +1,18 @@
 Express State Change History
 ============================
 
+NEXT
+----
+
+* Fixed issue with line terminator characters (`U+2028` and `U+2029`) being
+  handled differently in JavaScript vs. JSON by escaping them.
+  ([#21][], [#22][]: @norwood, @mathiasbynens)
+
+
+[#21]: https://github.com/yahoo/express-state/issues/21
+[#22]: https://github.com/yahoo/express-state/issues/22
+
+
 1.1.1 (2014-01-25)
 ------------------
 
