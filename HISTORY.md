@@ -1,8 +1,8 @@
 Express State Change History
 ============================
 
-NEXT
-----
+1.1.2 (2014-02-21)
+------------------
 
 * Fixed issue with line terminator characters (`U+2028` and `U+2029`) being
   handled differently in JavaScript vs. JSON by escaping them.
