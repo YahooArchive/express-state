@@ -354,5 +354,15 @@ describe('Exposed', function () {
             expect(window.foo.bar).to.equal('BAR');
             expect(window.foo.baz).to.equal('baz');
         });
+
+        it('should not shadow namespaces', function () {
+            exposed.add('foo', {});
+            exposed.add('foo.bar.baz', 'baz');
+
+            evalExposed(exposed);
+            expect(window.foo).to.be.an('object');
+            expect(window.foo.bar).to.be.an('object');
+            expect(window.foo.bar.baz).to.equal('baz');
+        });
     });
 });
