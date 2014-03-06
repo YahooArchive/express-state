@@ -343,15 +343,13 @@ The output of the `console.log()` call would be:
 
 ```javascript
 (function (root) {
-// -- Namespaces --
+// -- Data --
+root.foo = {"bar":"bar"};
 root.foo || (root.foo = {});
+root.foo.baz = /baz/;
 root.a || (root.a = {});
 root.a.very || (root.a.very = {});
 root.a.very.big || (root.a.very.big = {});
-
-// -- Exposed --
-root.foo = {"bar":"bar"};
-root.foo.baz = /baz/;
 root.a.very.big.ns = function () { return 'bla'; };
 }(this));
 ```
