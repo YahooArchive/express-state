@@ -1,6 +1,45 @@
 Express State Change History
 ============================
 
+1.1.3 (2014-03-06)
+------------------
+
+* Fixed issue where an error would be thrown when evaluating the JavaScript
+  output of exposed data with deep namespaces. The following will no longer
+  throw an error when its output is evaluated in the browser:
+
+    ```javascript
+    app.expose({}, 'foo');
+    app.expose('baz', 'foo.bar.baz');
+    ```
+
+  Previously, this would output the following and throw because `root.foo.bar`
+  was `undefined`:
+
+    ```javascript
+    root.foo || (root.foo = {});
+    root.foo.bar || (root.foo.bar = {});
+
+    root.foo = {};
+    root.foo.bar.baz = "baz";
+    ```
+
+  Now, the namespaces are initialized next to where data will be assigned to
+  them and now outputs the following:
+
+    ```javascript
+    root.foo = {};
+    root.foo || (root.foo = {});
+    root.foo.bar || (root.foo.bar = {});
+    root.foo.bar.baz = "baz";
+    ```
+
+  ([#23][] @jeremyruppel)
+
+
+[#23]: https://github.com/yahoo/express-state/issues/23
+
+
 1.1.2 (2014-02-21)
 ------------------
 
