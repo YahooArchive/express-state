@@ -1,8 +1,8 @@
 Express State Change History
 ============================
 
-NEXT
-----
+1.1.4 (2014-04-03)
+------------------
 
 * Fixed issue where pre-serialized values from a parent `Exposed` object were
   being used instead of an `Exposed` object's own values. The process of getting
