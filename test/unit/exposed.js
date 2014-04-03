@@ -71,17 +71,21 @@ describe('Exposed', function () {
                 expect(sub).to.have.ownProperty('baz');
             });
 
-            it('should override shadow namespaces on super', function () {
+            it('should override and shadow namespaces on super', function () {
                 var sup = Exposed.create(),
                     sub = Exposed.create(sup);
 
                 sup.add('foo.bar', 'bar');
                 sub.add('foo', 'foo');
 
+                sup.add('baz', 'zee');
+                sub.add('baz', 'baz');
+
                 evalExposed(sub);
                 expect(window).to.have.ownProperty('foo');
                 expect(window.foo).to.equal('foo');
                 expect(window.foo.bar).to.be.undefined;
+                expect(window.baz).to.equal('baz');
             });
 
             it('should inherit previous serialized values', function () {
@@ -138,6 +142,23 @@ describe('Exposed', function () {
 
                 evalExposed(sup);
                 expect(sup).to.not.have.property('foo');
+            });
+
+            it('should override and shadow serialized values at namespaces on super', function () {
+                var sup = Exposed.create(),
+                    sub = Exposed.create(sup);
+
+                sup.add('foo.bar', 'bar', {cache: true});
+                sub.add('foo', 'foo');
+
+                sup.add('baz', 'zee', {cache: true});
+                sub.add('baz', 'baz');
+
+                evalExposed(sub);
+                expect(window).to.have.ownProperty('foo');
+                expect(window.foo).to.equal('foo');
+                expect(window.foo.bar).to.be.undefined;
+                expect(window.baz).to.equal('baz');
             });
         });
     });
