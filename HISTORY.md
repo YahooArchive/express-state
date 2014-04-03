@@ -1,12 +1,37 @@
 Express State Change History
 ============================
 
+NEXT
+----
+
+* Fixed issue where pre-serialized values from a parent `Exposed` object were
+  being used instead of an `Exposed` object's own values. The process of getting
+  a serialized value for a given namespace has been improved to properly follow
+  the semantics of `Exposed` object hierarchy. ([#25][])
+
+    ```javascript
+    app.expose(1, 'foo', {cache: true});
+    res.expose(2, 'foo');
+    ```
+
+  The above now results in the following, as expected:
+
+    ```javascript
+    console.log(window.foo); // => 2
+    ```
+
+
+[#25]: https://github.com/yahoo/express-state/issues/25
+
+
 1.1.3 (2014-03-06)
 ------------------
 
 * Fixed issue where an error would be thrown when evaluating the JavaScript
-  output of exposed data with deep namespaces. The following will no longer
-  throw an error when its output is evaluated in the browser:
+  output of exposed data with deep namespaces. ([#23][] @jeremyruppel)
+
+  The following will no longer throw an error when its output is evaluated in
+  the browser:
 
     ```javascript
     app.expose({}, 'foo');
@@ -33,8 +58,6 @@ Express State Change History
     root.foo.bar || (root.foo.bar = {});
     root.foo.bar.baz = "baz";
     ```
-
-  ([#23][] @jeremyruppel)
 
 
 [#23]: https://github.com/yahoo/express-state/issues/23
