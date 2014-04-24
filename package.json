@@ -38,11 +38,11 @@
     "npm": ">=1.2.10"
   },
   "peerDependencies": {
-    "express": "3.x"
+    "express": ">=3.x"
   },
   "devDependencies": {
     "chai": "*",
-    "express": "3.x",
+    "express": "4.x",
     "express3-handlebars": "*",
     "istanbul": "*",
     "mocha": "*",

@@ -219,7 +219,7 @@ describe('state', function () {
             res = Object.create(app.response);
 
             res.app    = app;
-            res.locals = expressUtils.locals();
+            res.locals = {};
         });
 
         it('should respond to expose()', function () {
@@ -244,7 +244,7 @@ describe('state', function () {
             expect(res.locals.state).to.have.ownProperty('bar');
             expect(res.locals.state.bar).to.equal('bar');
 
-            expect(app.locals).to.have.ownProperty('state');
+            expect(app.locals).to.have.property('state');
             expect(Object.getPrototypeOf(res.locals.state)).to.equal(app.locals.state);
 
             app.expose('foo', 'foo');
