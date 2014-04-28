@@ -219,7 +219,7 @@ describe('state', function () {
             res = Object.create(app.response);
 
             res.app    = app;
-            res.locals = {};
+            res.locals = Object.create(null);
         });
 
         it('should respond to expose()', function () {
