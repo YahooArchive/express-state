@@ -1,6 +1,16 @@
 Express State Change History
 ============================
 
+NEXT
+----
+
+* Updated Express peer dependency to `>=3.x` because it works with Express v4.x.
+  ([#29][] @NoumanSaleem)
+
+
+[#29]: https://github.com/yahoo/express-state/issues/29
+
+
 1.1.4 (2014-04-03)
 ------------------
 
