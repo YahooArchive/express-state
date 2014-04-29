@@ -1,8 +1,8 @@
 Express State Change History
 ============================
 
-NEXT
-----
+1.2.0 (2014-04-28)
+------------------
 
 * Updated Express peer dependency to `>=3.x` because it works with Express v4.x.
   ([#29][] @NoumanSaleem)
