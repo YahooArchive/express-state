@@ -2,7 +2,7 @@
 
 var Exposed = require('./lib/exposed');
 
-exports.local     = 'state';
+exports.name      = 'state';
 exports.namespace = null;
 exports.extend    = extendApp;
 
@@ -14,8 +14,10 @@ function extendApp(app) {
 
     // Modifies the Express `app` and its `response` prototype by adding the
     // `expose()` method.
-    app.expose          = expose;
-    app.response.expose = expose;
+    app.expose           = expose;
+    app.exposed          = {};
+    app.response.expose  = expose;
+    app.response.exposed = Object.create(app.exposed);
 
     return app;
 }
@@ -24,45 +26,37 @@ function expose(obj, namespace, options) {
     /* jshint validthis:true */
 
     var app           = this.app || this,
-        appLocals     = app.locals,
-        locals        = this.locals,
-        rootNamespace = app.get('state namespace') || exports.namespace,
-        local, appExposed, exposed, type;
+        appExposed    = app.exposed,
+        exposed       = this.exposed,
+        rootNamespace = app.get('state namespace') || exports.namespace;
+
+    var name, appExposedObj, exposedObj, type;
 
     // Massage arguments to support the following signatures:
     // expose( obj [[, namespace [, options]] | [, options]] )
-    // expose( obj [, namespace [, local]] )
     if (namespace && typeof namespace === 'object') {
         options   = namespace;
         namespace = options.namespace;
-        local     = options.local;
-    } else if (options && typeof options === 'string') {
-        local   = options;
-        options = null;
-
-        // Warn about deprecated API signature:
-        // expose( obj [, namespace [, local]] )
-        console.warn('(express-state) warning: ' +
-            '`expose( obj, namespace, local)` signature has been deprecated.');
+        name      = options.name;
     } else {
-        local = options && options.local;
+        name = options && options.name;
     }
 
-    if (!local) {
-        local = app.get('state local') || exports.local;
+    if (!name) {
+        name = app.get('state name') || exports.name;
     }
 
-    appExposed = appLocals[local];
-    exposed    = locals[local];
+    appExposedObj = appExposed[name];
+    exposedObj    = exposed[name];
 
     // Makes sure there's an `Exposed` instance, and that all request-scoped
     // instances are *always* linked to their corresponding app-scoped objects.
-    if (!Exposed.isExposed(exposed)) {
-        if (!(app === this || Exposed.isExposed(appExposed))) {
-            appExposed = appLocals[local] = Exposed.create();
+    if (!(exposed.hasOwnProperty(name) && Exposed.isExposed(exposedObj))) {
+        if (!(app === this || Exposed.isExposed(appExposedObj))) {
+            appExposedObj = appExposed[name] = Exposed.create();
         }
 
-        exposed = locals[local] = Exposed.create(appExposed);
+        exposedObj = exposed[name] = Exposed.create(appExposedObj);
     }
 
     // When no namespace is provided, expose each value of the specified `obj`
@@ -73,7 +67,7 @@ function expose(obj, namespace, options) {
         // Only get the keys of enumerable objects.
         if ((type === 'object' || type === 'function') && obj !== null) {
             Object.keys(obj).forEach(function (key) {
-                exposed.add(key, obj[key], options);
+                exposedObj.add(key, obj[key], options);
             });
         }
 
@@ -90,5 +84,5 @@ function expose(obj, namespace, options) {
         namespace = rootNamespace;
     }
 
-    exposed.add(namespace, obj, options);
+    exposedObj.add(namespace, obj, options);
 }
