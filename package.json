@@ -41,7 +41,7 @@
     "express": ">=3.x"
   },
   "dependencies": {
-    "serialize-javascript": "^1.0.0"
+    "serialize-javascript": "~1.0.0"
   },
   "devDependencies": {
     "chai": "*",
