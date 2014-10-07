@@ -40,6 +40,9 @@
   "peerDependencies": {
     "express": ">=3.x"
   },
+  "dependencies": {
+    "serialize-javascript": "~1.0.0"
+  },
   "devDependencies": {
     "chai": "*",
     "express": "4.x",

@@ -1,8 +1,8 @@
 'use strict';
 
 var Benchmark  = require('benchmark'),
+    serialize  = require('serialize-javascript'),
     Exposed    = require('../../lib/exposed'),
-    serialize  = require('../../lib/serialize'),
     ytFixture  = require('../fixtures/yahoo-tech'),
     pnmFixture = require('../fixtures/photosnearme');
 
