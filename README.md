@@ -343,7 +343,7 @@ The output of the `console.log()` call would be:
 
 ```javascript
 (function (root) {
-// -- Data --
+/* -- Data -- */
 root.foo = {"bar":"bar"};
 root.foo || (root.foo = {});
 root.foo.baz = /baz/;
