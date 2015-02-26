@@ -56,5 +56,11 @@
   "scripts": {
     "test": "istanbul cover -- ./node_modules/mocha/bin/_mocha test/unit/ --reporter spec",
     "benchmark": "node test/benchmark/serialize.js"
-  }
+  },
+  "licenses": [
+    {
+      "type" : "BSD",
+      "url" : "https://github.com/yahoo/express-state/blob/master/LICENSE"
+    }
+  ]
 }
