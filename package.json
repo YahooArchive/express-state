@@ -2,6 +2,12 @@
   "name": "express-state",
   "description": "Share server-side state with the client-side of an Express app via JavaScript.",
   "version": "1.2.0",
+  "licenses": [
+    {
+      "type" : "BSD",
+      "url" : "https://github.com/yahoo/express-state/blob/master/LICENSE"
+    }
+  ],
   "homepage": "https://github.com/yahoo/express-state",
   "keywords": [
     "express",
