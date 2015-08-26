@@ -1,6 +1,16 @@
 Express State Change History
 ============================
 
+1.3.0 (2015-08-26)
+------------------
+
+* Externalize and depend on [`serialize-javascript`][serialize-javascript]
+  package.
+
+
+[serialize-javascript]: https://github.com/yahoo/serialize-javascript
+
+
 1.2.0 (2014-04-28)
 ------------------
 
