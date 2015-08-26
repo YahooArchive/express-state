@@ -1,14 +1,19 @@
 Express State
 =============
 
-[![Build Status](https://travis-ci.org/yahoo/express-state.png?branch=master)](https://travis-ci.org/yahoo/express-state)
-[![Dependency Status](https://gemnasium.com/yahoo/express-state.png)](https://gemnasium.com/yahoo/express-state)
-[![npm Version](https://badge.fury.io/js/express-state.png)](https://npmjs.org/package/express-state)
+[![npm Version][npm-badge]][npm]
+[![Dependency Status][david-badge]][david]
+[![Build Status][travis-badge]][travis]
 
 Share configuration and state data of an [Express][] app with the client-side
 via JavaScript.
 
-
+[npm]: https://www.npmjs.org/package/express-state
+[npm-badge]: https://img.shields.io/npm/v/express-state.svg?style=flat-square
+[david]: https://david-dm.org/yahoo/express-state
+[david-badge]: https://img.shields.io/david/yahoo/express-state.svg?style=flat-square
+[travis]: https://travis-ci.org/yahoo/express-state
+[travis-badge]: https://img.shields.io/travis/yahoo/express-state.svg?style=flat-square
 [Express]: https://github.com/visionmedia/express
 
 
