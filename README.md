@@ -542,6 +542,10 @@ input is _always_ escaped before it passed to this method.
     * `[namespace]`: Used to specify a `namespace` (described above) when
       `options` is passed as the second argument to this method.
 
+    * `[isJSON]`: Optional boolean to signal that the `obj` being serialized is
+      pure JSON data. This allows serialization to take a fast-path making it
+      over 3x faster.
+
 **Note:** A `TypeError` will be thrown if a native built-in function is being
 serialized, like the `Number` constructor. Native built-ins should be called in
 wrapper functions, which can be serialized. See the [Exposing Functions][]
