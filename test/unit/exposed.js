@@ -329,7 +329,7 @@ describe('Exposed', function () {
             exposed.add('a.b.c.d.e.f.g.h.i.j.k', {});
 
             evalExposed(exposed);
-            expect(window).to.have.deep.property('a.b.c.d.e.f.g.h.i.j.k');
+            expect(window).to.have.nested.property('a.b.c.d.e.f.g.h.i.j.k');
         });
 
         it('should assign `value` to `namespace`', function () {
